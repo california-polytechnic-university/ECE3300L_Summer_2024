@@ -1,1 +1,32 @@
+module main
 
+(
+input [3:0]SW,
+input sel,
+output reg[15:0]LED
+ );
+   always @(SW,sel)
+   begin
+   LED=16'b0;
+   
+   case (SW)
+        4'b0000: LED[0] = 1'b1;
+        4'b0001: LED[1] = 1'b1;
+        4'b0010: LED[2] = 1'b1;
+        4'b0011: LED[3] = 1'b1;
+        4'b0100: LED[4] = 1'b1;
+        4'b0101: LED[5] = 1'b1;
+        4'b0110: LED[6] = 1'b1;
+        4'b0111: LED[7] = 1'b1;
+        4'b1000: LED[8] = 1'b1;
+        4'b1001: LED[9] = 1'b1;
+        4'b1010: LED[10] = 1'b1;
+        4'b1011: LED[11] = 1'b1;
+        4'b1100: LED[12] = 1'b1;
+        4'b1101: LED[13] = 1'b1;
+        4'b1110: LED[14] = 1'b1;
+        4'b1111: LED[15] = 1'b1;
+        default: LED = 16'b0;
+    endcase
+end
+endmodule

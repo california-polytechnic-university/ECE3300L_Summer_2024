@@ -1,1 +1,61 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: California State Polytechnic University Pomona
+// Engineer: Undergraduate Brandon Rickman
+// 
+// Create Date: 06/10/2024 03:43:43 PM
+// Design Name: Switch to LED Mapping
+// Module Name: SWtoLED_tb
+// Project Name: Lab0
+// Target Devices: 
+// Tool Versions: 
+// Description: Test bench file for testing switch to led outputs 
+// 
+// Dependencies: 
+// 
+// Revision: 1.0
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
 
+
+module SWtoLED_tb(
+
+                 );
+                 
+                 
+                 reg [15:0] switch;
+                 wire [15:0] lights;
+                 
+                 
+                 SWtoLED TB_TESTING (
+                                        .SW(switch),
+                                        .LED(lights)
+                                    );
+            initial
+                begin
+                    switch = 16'h0001;  //0000 0000 0000 0001
+                    #10 // 1o nanosecond delay
+                    switch = 16'h0002;  //0000 0000 0000 0010
+                    #10 // 1o nanosecond delay
+                    switch = 16'h0004;  //0000 0000 0000 0100
+                    #10 // 1o nanosecond delay
+                    switch = 16'h0008;  //0000 0000 0000 1000
+                    #10 // 1o nanosecond delay
+                    switch = 16'h0010;  //0000 0000 0001 0000
+                    #10 // 1o nanosecond delay
+                    switch = 16'h0020;  //0000 0000 0010 0000
+                    #10 // 1o nanosecond delay
+                    switch = 16'h0040;  //0000 0000 0100 0000
+                    #10 // 1o nanosecond delay
+                    switch = 16'h0080;  //0000 0000 1000 0000
+                    #10 // 1o nanosecond delay
+                    switch = 16'h0FFF;  //0000 1111 1111 1111
+                    #10 // 1o nanosecond delay
+                    switch = 16'hF000;  //1111 0000 0000 0000
+                    #10 // 1o nanosecond delay
+
+                    $finish;
+                end
+endmodule

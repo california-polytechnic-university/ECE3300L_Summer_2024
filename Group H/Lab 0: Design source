@@ -1,6 +1,40 @@
+//Jose Lopez Code
 module intro_pins(
     input [15:0] pin,
     output [15:0] led
     );
     assign pin=led;
+endmodule
+
+//////////////////////////////////////////////////////////////////////////////////
+
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: California State Polytechnic University Pomona
+// Engineer: Undergraduate Brandon Rickman
+// 
+// Create Date: 06/10/2024 03:36:33 PM
+// Design Name: Switch to LED Mapping
+// Module Name: SWtoLED
+// Project Name: Lab0
+// Target Devices: 
+// Tool Versions: 
+// Description: Instantiation file
+// 
+// Dependencies: 
+// 
+// Revision: 1.0
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+    module SWtoLED(
+                    input  wire [15:0] SW,
+                    output wire [15:0] LED
+                  );
+                  
+              assign LED = SW;  // Map each switch to its corresponding LED
+              
 endmodule

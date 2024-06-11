@@ -1,3 +1,4 @@
+//Jose Lopez Code
 module main
 
 (
@@ -29,4 +30,92 @@ output reg[15:0]LED
         default: LED = 16'b0;
     endcase
 end
+endmodule
+
+
+//////////////////////////////////////////////////////////////////////////////////
+//Brandon RIckman's Design Source Code
+
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: California State Polytechnic University Pomona
+// Engineer: Undergrad Brandon Rickman
+// 
+// Create Date: 06/10/2024 06:01:32 PM
+// Design Name: Lab1
+// Module Name: decoder_top
+// Project Name: 4x16Decoder
+// Target Devices: 
+// Tool Versions: 
+// Description: Instantiates decoder file
+// 
+// Dependencies: 
+// 
+// Revision: 1.0
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module decoder_top(
+                    input  [3:0] SW,    // 4-bit switch input
+                    output [15:0] LED   // 16-bit LED outputs
+                  );
+          decoder decoder_inst (
+                .SW(SW),
+                .LED(LED)
+                );
+                
+endmodule
+
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: California State Polytechnic University Pomona
+// Engineer: Undergrad Brandon Rickman
+// 
+// Create Date: 06/10/2024 05:38:40 PM
+// Design Name: Lab1
+// Module Name: decoder
+// Project Name: 4x16Decoder
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision: 1.0
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module decoder(
+                input  wire [3:0] SW,   // 4-bit switch input
+                output reg [15:0] LED  // 16-bit LED output
+              );
+              
+      always @(*) begin
+        LED = 16'b0;    // All LED's are off to start
+        case (SW)
+            4'b0000: LED[0] = 1'b1; // Switch configuration 0000, LED0 on
+            4'b0001: LED[1] = 1'b1; // Switch configuration 0001, LED1 on
+            4'b0010: LED[2] = 1'b1; // Switch configuration 0010, LED2 on
+            4'b0011: LED[3] = 1'b1; // Switch configuration 0011, LED3 on
+            4'b0100: LED[4] = 1'b1; // Switch configuration 0100, LED4 on
+            4'b0101: LED[5] = 1'b1; // Switch configuration 0101, LED5 on
+            4'b0110: LED[6] = 1'b1; // Switch configuration 0110, LED6 on
+            4'b0111: LED[7] = 1'b1; // Switch configuration 0111, LED7 on
+            4'b1000: LED[8] = 1'b1; // Switch configuration 1000, LED8 on
+            4'b1001: LED[9] = 1'b1; // Switch configuration 1001, LED9 on
+            4'ha: LED[10] = 1'b1;   // Switch configuration 1010, LED10 on
+            4'hb: LED[11] = 1'b1;   // Switch configuration 1011, LED11 on
+            4'hc: LED[12] = 1'b1;   // Switch configuration 1100, LED12 on
+            4'hd: LED[13] = 1'b1;   // Switch configuration 1101, LED13 on
+            4'he: LED[14] = 1'b1;   // Switch configuration 1110, LED14 on
+            4'hf: LED[15] = 1'b1;   // Switch configuration 1111, LED15 on
+            default: LED = 16'b0;
+        endcase
+    end
 endmodule

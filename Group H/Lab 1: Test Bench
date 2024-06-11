@@ -1,1 +1,72 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: California State Polytechnic University Pomona
+// Engineer: Undergrad Brandon Rickman 
+// 
+// Create Date: 06/10/2024 06:06:14 PM
+// Design Name: Lab1
+// Module Name: decoder_top_tb
+// Project Name: 4x16Decoder
+// Target Devices: 
+// Tool Versions: 
+// Description: decoder test bench file to test LED outputs based on switch position
+// 
+// Dependencies: 
+// 
+// Revision: 1.0
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module decoder_top_tb(
+
+                     );
+                     
+                     reg  [3:0] switch;
+                     wire [15:0] light;
+                     
+                     decoder_top TB_TESTING (
+                                                .SW(switch),
+                                                .LED(light)
+                                            );
+                                            
+        initial begin
+            switch = 4'b0000;   // All LED's off to start
+            #10 // 10 nanosecond delay
+            switch = 4'b0001;   // LED1 on
+            #10 // 10 nanosecond delay
+            switch = 4'b0010;   //LED2 on
+            #10 // 10 nanosecond delay
+            switch = 4'b0011;   //LED3 on
+            #10 // 10 nanosecond delay
+            switch = 4'b0100;   //LED4 on
+            #10 // 10 nanosecond delay
+            switch = 4'b0101;   //LED5 on
+            #10 // 10 nanosecond delay
+            switch = 4'b0110;   //LED6 on
+            #10 // 10 nanosecond delay
+            switch = 4'b0111;   //LED7 on
+            #10 // 10 nanosecond delay
+            switch = 4'b1000;   //LED8 on
+            #10 // 10 nanosecond delay
+            switch = 4'b1001;   //LED9 on
+            #10 // 10 nanosecond delay
+            switch = 4'ha;   //LED10 on
+            #10 // 10 nanosecond delay
+            switch = 4'hb;   //LED11 on
+            #10 // 10 nanosecond delay
+            switch = 4'hc;   //LED12 on
+            #10 // 10 nanosecond delay
+            switch = 4'hd;   //LED13 on
+            #10 // 10 nanosecond delay
+            switch = 4'he;   //LED14 on
+            #10 // 10 nanosecond delay
+            switch = 4'hf;   //LED15 on
+            #10 // 10 nanosecond delay
+            
+            $finish;
+        end
+endmodule
 

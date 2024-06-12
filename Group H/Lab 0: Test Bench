@@ -59,3 +59,65 @@ module SWtoLED_tb(
                     $finish;
                 end
 endmodule
+
+timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: Cal Poly Pomona
+// Engineer: JOSE LOPEZ
+// 
+// Create Date: 06/05/2024 11:24:52 AM
+// Design Name: 
+// Module Name: intopinsim
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module intopinsim(
+);
+
+  reg [15:0] SW;
+  wire [15:0] LED;
+                 
+                 
+  intropin_TB (
+  .SW(SW),
+  .LED(LED)
+   
+   );
+            initial
+                begin
+                    SW = 16'h0001;  
+                    #10 
+                    SW = 16'h0002;
+                    #10 
+                    SW = 16'h0004;  
+                    #10 
+                    SW = 16'h0008;  
+                    #10 
+                    SW = 16'h0010;  
+                    #10 
+                    SW = 16'h0020;  
+                    #10 
+                    SW = 16'h0040;  
+                    #10 
+                    SW = 16'h0080;  
+                    #10 
+                    SW = 16'h0FFF;  
+                    #10 
+                    SW = 16'hF000;  
+                    #10 
+
+                    $finish;
+                end
+endmodule
+

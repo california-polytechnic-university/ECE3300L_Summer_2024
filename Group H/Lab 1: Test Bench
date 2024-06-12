@@ -70,3 +70,76 @@ module decoder_top_tb(
         end
 endmodule
 
+
+timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: Cal Poly Pomona
+// Engineer: JOSE LOPEZ
+// 
+// Create Date: 06/09/2024 11:41:15 PM
+// Design Name: 
+// Module Name: main_tb
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module main_tb(
+
+    );
+                     
+                     reg  [3:0] SW;
+                     wire [15:0] LED;
+                     
+                     main_TB(
+                                                .SW(SW),
+                                                .LED(LED)
+                                            );
+                                            
+        initial begin
+            SW = 4'b0000;   
+            #10 
+            SW = 4'b0001;   
+            #10 
+            SW = 4'b0010;   
+            #10 
+            SW = 4'b0011;   
+            #10 
+            SW = 4'b0100;   
+            #10 
+            SW = 4'b0101;   
+            #10 
+            SW = 4'b0110;   
+            #10 
+            SW = 4'b0111;   
+            #10 
+            SW = 4'b1000;   
+            #10 
+            SW = 4'b1001;   
+            #10 
+            SW = 4'ha;   
+            #10 
+            SW = 4'hb;   
+            #10 
+            SW = 4'hc;   
+            #10 
+            SW = 4'hd;   
+            #10 
+            SW = 4'he; 
+            #10 
+            SW = 4'hf;   
+            #10 
+            
+            $finish;
+        end
+endmodule
+

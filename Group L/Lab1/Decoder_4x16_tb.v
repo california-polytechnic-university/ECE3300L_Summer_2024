@@ -73,6 +73,6 @@ module Decoder_4x16_tb;
         SW_tb = 4'b1110; #10;
         SW_tb = 4'b1111; #10;
         
-        $stop;
+        $finish;
     end
 endmodule

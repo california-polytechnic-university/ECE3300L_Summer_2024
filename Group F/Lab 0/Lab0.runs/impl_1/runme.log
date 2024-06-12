@@ -1,0 +1,191 @@
+
+*** Running vivado
+    with args -log Lab0.vdi -applog -m64 -product Vivado -messageDb vivado.pb -mode batch -source Lab0.tcl -notrace
+
+
+****** Vivado v2019.1 (64-bit)
+  **** SW Build 2552052 on Fri May 24 14:49:42 MDT 2019
+  **** IP Build 2548770 on Fri May 24 18:01:18 MDT 2019
+    ** Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+
+source Lab0.tcl -notrace
+Command: link_design -top Lab0 -part xc7k70tfbv676-1
+Design is defaulting to srcset: sources_1
+Design is defaulting to constrset: constrs_1
+INFO: [Device 21-403] Loading part xc7k70tfbv676-1
+INFO: [Project 1-479] Netlist was created with Vivado 2019.1
+INFO: [Project 1-570] Preparing netlist for logic optimization
+Parsing XDC File [C:/3300L_Xilinx/Lab0/Lab0.srcs/constrs_1/new/Lab0.xdc]
+WARNING: [Vivado 12-584] No ports matched 'CLK100MHZ'. [C:/3300L_Xilinx/Lab0/Lab0.srcs/constrs_1/new/Lab0.xdc:8]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/3300L_Xilinx/Lab0/Lab0.srcs/constrs_1/new/Lab0.xdc:8]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'CLK100MHZ'. [C:/3300L_Xilinx/Lab0/Lab0.srcs/constrs_1/new/Lab0.xdc:9]
+CRITICAL WARNING: [Vivado 12-4739] create_clock:No valid object(s) found for '-objects [get_ports CLK100MHZ]'. [C:/3300L_Xilinx/Lab0/Lab0.srcs/constrs_1/new/Lab0.xdc:9]
+Resolution: Check if the specified object(s) exists in the current design. If it does, ensure that the correct design hierarchy was specified for the object. If you are working with clocks, make sure create_clock was used to create the clock object before it is referenced.
+CRITICAL WARNING: [Common 17-69] Command failed: 'L16' is not a valid site or package pin name. [C:/3300L_Xilinx/Lab0/Lab0.srcs/constrs_1/new/Lab0.xdc:14]
+CRITICAL WARNING: [Common 17-69] Command failed: 'M13' is not a valid site or package pin name. [C:/3300L_Xilinx/Lab0/Lab0.srcs/constrs_1/new/Lab0.xdc:15]
+CRITICAL WARNING: [Common 17-69] Command failed: 'R15' is not a valid site or package pin name. [C:/3300L_Xilinx/Lab0/Lab0.srcs/constrs_1/new/Lab0.xdc:16]
+CRITICAL WARNING: [Common 17-69] Command failed: 'U18' is not a valid site or package pin name. [C:/3300L_Xilinx/Lab0/Lab0.srcs/constrs_1/new/Lab0.xdc:19]
+CRITICAL WARNING: [Common 17-69] Command failed: 'R13' is not a valid site or package pin name. [C:/3300L_Xilinx/Lab0/Lab0.srcs/constrs_1/new/Lab0.xdc:20]
+CRITICAL WARNING: [Common 17-69] Command failed: 'T8' is not a valid site or package pin name. [C:/3300L_Xilinx/Lab0/Lab0.srcs/constrs_1/new/Lab0.xdc:21]
+CRITICAL WARNING: [Common 17-69] Command failed: 'U8' is not a valid site or package pin name. [C:/3300L_Xilinx/Lab0/Lab0.srcs/constrs_1/new/Lab0.xdc:22]
+CRITICAL WARNING: [Common 17-69] Command failed: 'T13' is not a valid site or package pin name. [C:/3300L_Xilinx/Lab0/Lab0.srcs/constrs_1/new/Lab0.xdc:24]
+CRITICAL WARNING: [Vivado 12-1815] Setting property 'IOSTANDARD' is not allowed for GT terminals. [C:/3300L_Xilinx/Lab0/Lab0.srcs/constrs_1/new/Lab0.xdc:25]
+CRITICAL WARNING: [Common 17-69] Command failed: 'U12' is not a valid site or package pin name. [C:/3300L_Xilinx/Lab0/Lab0.srcs/constrs_1/new/Lab0.xdc:26]
+CRITICAL WARNING: [Common 17-69] Command failed: 'U11' is not a valid site or package pin name. [C:/3300L_Xilinx/Lab0/Lab0.srcs/constrs_1/new/Lab0.xdc:27]
+CRITICAL WARNING: [Common 17-69] Command failed: 'V10' is not a valid site or package pin name. [C:/3300L_Xilinx/Lab0/Lab0.srcs/constrs_1/new/Lab0.xdc:28]
+CRITICAL WARNING: [Common 17-69] Command failed: 'N14' is not a valid site or package pin name. [C:/3300L_Xilinx/Lab0/Lab0.srcs/constrs_1/new/Lab0.xdc:34]
+CRITICAL WARNING: [Common 17-69] Command failed: 'V17' is not a valid site or package pin name. [C:/3300L_Xilinx/Lab0/Lab0.srcs/constrs_1/new/Lab0.xdc:36]
+CRITICAL WARNING: [Common 17-69] Command failed: 'V16' is not a valid site or package pin name. [C:/3300L_Xilinx/Lab0/Lab0.srcs/constrs_1/new/Lab0.xdc:39]
+CRITICAL WARNING: [Common 17-69] Command failed: 'T15' is not a valid site or package pin name. [C:/3300L_Xilinx/Lab0/Lab0.srcs/constrs_1/new/Lab0.xdc:40]
+CRITICAL WARNING: [Common 17-69] Command failed: 'U14' is not a valid site or package pin name. [C:/3300L_Xilinx/Lab0/Lab0.srcs/constrs_1/new/Lab0.xdc:41]
+CRITICAL WARNING: [Common 17-69] Command failed: 'T16' is not a valid site or package pin name. [C:/3300L_Xilinx/Lab0/Lab0.srcs/constrs_1/new/Lab0.xdc:42]
+CRITICAL WARNING: [Common 17-69] Command failed: 'V15' is not a valid site or package pin name. [C:/3300L_Xilinx/Lab0/Lab0.srcs/constrs_1/new/Lab0.xdc:43]
+CRITICAL WARNING: [Common 17-69] Command failed: 'V14' is not a valid site or package pin name. [C:/3300L_Xilinx/Lab0/Lab0.srcs/constrs_1/new/Lab0.xdc:44]
+Finished Parsing XDC File [C:/3300L_Xilinx/Lab0/Lab0.srcs/constrs_1/new/Lab0.xdc]
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 640.926 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+5 Infos, 2 Warnings, 22 Critical Warnings and 0 Errors encountered.
+link_design completed successfully
+link_design: Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 644.898 ; gain = 351.637
+Command: opt_design
+Attempting to get a license for feature 'Implementation' and/or device 'xc7k70t'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7k70t'
+Running DRC as a precondition to command opt_design
+
+Starting DRC Task
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Project 1-461] DRC finished with 0 Errors
+INFO: [Project 1-462] Please refer to the DRC report (report_drc) for more information.
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.438 . Memory (MB): peak = 666.270 ; gain = 21.371
+
+Starting Cache Timing Information Task
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+Ending Cache Timing Information Task | Checksum: 1b252c37a
+
+Time (s): cpu = 00:00:07 ; elapsed = 00:00:07 . Memory (MB): peak = 1196.242 ; gain = 529.973
+
+Starting Logic Optimization Task
+
+Phase 1 Retarget
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+INFO: [Opt 31-49] Retargeted 0 cell(s).
+Phase 1 Retarget | Checksum: 1b252c37a
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.004 . Memory (MB): peak = 1338.086 ; gain = 0.000
+INFO: [Opt 31-389] Phase Retarget created 0 cells and removed 0 cells
+
+Phase 2 Constant propagation
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Phase 2 Constant propagation | Checksum: 1b252c37a
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.005 . Memory (MB): peak = 1338.086 ; gain = 0.000
+INFO: [Opt 31-389] Phase Constant propagation created 0 cells and removed 0 cells
+
+Phase 3 Sweep
+Phase 3 Sweep | Checksum: 1b252c37a
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.006 . Memory (MB): peak = 1338.086 ; gain = 0.000
+INFO: [Opt 31-389] Phase Sweep created 0 cells and removed 0 cells
+
+Phase 4 BUFG optimization
+Phase 4 BUFG optimization | Checksum: 1b252c37a
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.008 . Memory (MB): peak = 1338.086 ; gain = 0.000
+INFO: [Opt 31-662] Phase BUFG optimization created 0 cells of which 0 are BUFGs and removed 0 cells.
+
+Phase 5 Shift Register Optimization
+INFO: [Opt 31-1064] SRL Remap converted 0 SRLs to 0 registers and converted 0 registers of register chains to 0 SRLs
+Phase 5 Shift Register Optimization | Checksum: 1b252c37a
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.009 . Memory (MB): peak = 1338.086 ; gain = 0.000
+INFO: [Opt 31-389] Phase Shift Register Optimization created 0 cells and removed 0 cells
+
+Phase 6 Post Processing Netlist
+Phase 6 Post Processing Netlist | Checksum: 1b252c37a
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.010 . Memory (MB): peak = 1338.086 ; gain = 0.000
+INFO: [Opt 31-389] Phase Post Processing Netlist created 0 cells and removed 0 cells
+Opt_design Change Summary
+=========================
+
+
+-------------------------------------------------------------------------------------------------------------------------
+|  Phase                        |  #Cells created  |  #Cells Removed  |  #Constrained objects preventing optimizations  |
+-------------------------------------------------------------------------------------------------------------------------
+|  Retarget                     |               0  |               0  |                                              0  |
+|  Constant propagation         |               0  |               0  |                                              0  |
+|  Sweep                        |               0  |               0  |                                              0  |
+|  BUFG optimization            |               0  |               0  |                                              0  |
+|  Shift Register Optimization  |               0  |               0  |                                              0  |
+|  Post Processing Netlist      |               0  |               0  |                                              0  |
+-------------------------------------------------------------------------------------------------------------------------
+
+
+
+Starting Connectivity Check Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1338.086 ; gain = 0.000
+Ending Logic Optimization Task | Checksum: 1b252c37a
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.011 . Memory (MB): peak = 1338.086 ; gain = 0.000
+
+Starting Power Optimization Task
+INFO: [Pwropt 34-132] Skipping clock gating for clocks with a period < 2.00 ns.
+Ending Power Optimization Task | Checksum: 1b252c37a
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.005 . Memory (MB): peak = 1338.086 ; gain = 0.000
+
+Starting Final Cleanup Task
+Ending Final Cleanup Task | Checksum: 1b252c37a
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1338.086 ; gain = 0.000
+
+Starting Netlist Obfuscation Task
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1338.086 ; gain = 0.000
+Ending Netlist Obfuscation Task | Checksum: 1b252c37a
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1338.086 ; gain = 0.000
+INFO: [Common 17-83] Releasing license: Implementation
+22 Infos, 2 Warnings, 22 Critical Warnings and 0 Errors encountered.
+opt_design completed successfully
+opt_design: Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 1338.086 ; gain = 693.188
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1338.086 ; gain = 0.000
+INFO: [Timing 38-480] Writing timing data to binary archive.
+Writing placer database...
+Writing XDEF routing.
+Writing XDEF routing logical nets.
+Writing XDEF routing special nets.
+Write XDEF Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.021 . Memory (MB): peak = 1338.086 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'C:/3300L_Xilinx/Lab0/Lab0.runs/impl_1/Lab0_opt.dcp' has been generated.
+INFO: [runtcl-4] Executing : report_drc -file Lab0_drc_opted.rpt -pb Lab0_drc_opted.pb -rpx Lab0_drc_opted.rpx
+Command: report_drc -file Lab0_drc_opted.rpt -pb Lab0_drc_opted.pb -rpx Lab0_drc_opted.rpx
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2019.1/data/ip'.
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Coretcl 2-168] The results of DRC are in file C:/3300L_Xilinx/Lab0/Lab0.runs/impl_1/Lab0_drc_opted.rpt.
+report_drc completed successfully
+Command: place_design
+Attempting to get a license for feature 'Implementation' and/or device 'xc7k70t'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7k70t'
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors
+INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
+Running DRC as a precondition to command place_design
+INFO: [DRC 23-27] Running DRC with 2 threads
+ERROR: [DRC BIVB-1] Bank IO standard Support: Bank 33 has incompatible IO(s) because: The LVCMOS33 I/O standard is not supported for banks of type High Performance.  Move the following ports or change their properties:  
+LED[14] and LED[15]
+INFO: [Vivado_Tcl 4-198] DRC finished with 1 Errors
+INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
+ERROR: [Vivado_Tcl 4-23] Error(s) found during DRC. Placer not run.
+INFO: [Common 17-83] Releasing license: Implementation
+38 Infos, 2 Warnings, 22 Critical Warnings and 2 Errors encountered.
+place_design failed
+ERROR: [Common 17-39] 'place_design' failed due to earlier errors.
+
+INFO: [Common 17-206] Exiting Vivado at Mon Jun 10 21:38:48 2024...

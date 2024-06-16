@@ -1,7 +1,11 @@
 Group A: Zion Mun & Calvin Duong
 
 All lab and testbench demonstration videos will be in their respective lab folders and named: Lab(number)_video_link
-They will include a link to a google photos shared album with the two videos.
+They will include a link to a google photos shared album or youtube link of the two videos.
 
-Labs submissions will also be provided in their respective lab folder as individually named files (maincode.v, testbench,v, mastercode.xdc) ___OR___ as a zip file to be downloaded with the same files
+Labs submissions will also be provided in their respective lab folder as individually named files (code.v, testbench,v, mastercode.xdc) 
+
+___OR___ 
+
+As a zip file to be downloaded
 

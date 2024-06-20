@@ -1,0 +1,45 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: California State Polytechnic University Pomona
+// Engineer: Undergrad Brandon Rickman
+// 
+// Create Date: 06/10/2024 05:38:40 PM
+// Design Name: Lab1
+// Module Name: decoder
+// Project Name: 4x16Decoder
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision: 2.0
+// Revision 0.01 - File Created
+// Additional Comments: Revised code to utilize gate logic 
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module decoder(
+                input   [3:0] SW,   // 4-bit switch input
+                output  [15:0] LED  // 16-bit LED output
+              );
+                
+                assign LED[0] = ~SW[3] & ~SW[2] & ~SW[1] & ~SW[0];  //Switch input 0000 results in LED0 on
+                assign LED[1] = ~SW[3] & ~SW[2] & ~SW[1] &  SW[0];  //Switch input 0001 results in LED1 on
+                assign LED[2] = ~SW[3] & ~SW[2] &  SW[1] & ~SW[0];  //Switch input 0010 results in LED2 on
+                assign LED[3] = ~SW[3] & ~SW[2] &  SW[1] &  SW[0];  //Switch input 0011 results in LED3 on
+                assign LED[4] = ~SW[3] &  SW[2] & ~SW[1] & ~SW[0];  //Switch input 0100 results in LED4 on
+                assign LED[5] = ~SW[3] &  SW[2] & ~SW[1] &  SW[0];  //Switch input 0101 results in LED5 on
+                assign LED[6] = ~SW[3] &  SW[2] &  SW[1] & ~SW[0];  //Switch input 0110 results in LED6 on
+                assign LED[7] = ~SW[3] &  SW[2] &  SW[1] &  SW[0];  //Switch input 0111 results in LED7 on
+                assign LED[8] =  SW[3] & ~SW[2] & ~SW[1] & ~SW[0];  //Switch input 1000 results in LED8 on
+                assign LED[9] =  SW[3] & ~SW[2] & ~SW[1] &  SW[0];  //Switch input 1001 results in LED9 on
+                assign LED[10] = SW[3] & ~SW[2] &  SW[1] & ~SW[0];  //Switch input 1010 results in LED10 on
+                assign LED[11] = SW[3] & ~SW[2] &  SW[1] &  SW[0];  //Switch input 1011 results in LED11 on
+                assign LED[12] = SW[3] &  SW[2] & ~SW[1] & ~SW[0];  //Switch input 1100 results in LED12 on
+                assign LED[13] = SW[3] &  SW[2] & ~SW[1] &  SW[0];  //Switch input 1101 results in LED13 on
+                assign LED[14] = SW[3] &  SW[2] &  SW[1] & ~SW[0];  //Switch input 1110 results in LED14 on
+                assign LED[15] = SW[3] &  SW[2] &  SW[1] &  SW[0];  //Switch input 1111 results in LED15 on
+       
+endmodule

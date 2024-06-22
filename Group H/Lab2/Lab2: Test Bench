@@ -1,1 +1,70 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: California State Polytechnic University Pomona
+// Engineer: Undergraduate Brandon Rickman
+// 
+// Create Date: 06/21/2024 03:48:14 PM
+// Design Name: Lab2
+// Module Name: rgb_control_tb
+// Project Name: 4MUX_RGB_Control
+// Target Devices: 
+// Tool Versions: 
+// Description: Test bench for multiplexer RGB control design
+// 
+// Dependencies: 
+// 
+// Revision: 1.0
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
 
+
+module rgb_control_tb(
+                        
+           );
+                      
+           reg [13:0] switches;
+           wire r, g, b;
+           
+           rgb_control test_bench(
+                               .SW(switches),
+                               .LED16_R(r), 
+                               .LED16_G(g), 
+                               .LED16_B(b)
+                );
+        initial
+            begin
+                   switches = 14'b0000_0000_0000_00;
+                #5 switches = 14'b0000_0000_0111_00;
+                #5 switches = 14'b0000_0111_0000_00;
+                #5 switches = 14'b0111_0000_0000_00;
+                #5 switches = 14'b1000_0000_0000_00;
+                #5 switches = 14'b0000_1000_0000_00;
+                #5 switches = 14'b0000_0000_1000_00;
+                
+                #5 switches = 14'b0000_0000_0000_01;
+                #5 switches = 14'b0011_0010_0001_01;
+                #5 switches = 14'b0110_0101_0100_01;
+                #5 switches = 14'b1001_1000_0111_01;
+                #5 switches = 14'b1100_1011_1010_01;
+                #5 switches = 14'b1111_1110_1101_01;
+                                
+                #5 switches = 14'b0000_0000_0000_10;
+                #5 switches = 14'b0011_0010_0001_10;
+                #5 switches = 14'b0110_0101_0100_10;
+                #5 switches = 14'b1001_1000_0111_10;
+                #5 switches = 14'b1100_1011_1010_10;
+                #5 switches = 14'b1111_1110_1101_10;
+                
+                #5 switches = 14'b0000_0000_0000_11;
+                #5 switches = 14'b0011_0010_0001_11;
+                #5 switches = 14'b0110_0101_0100_11;
+                #5 switches = 14'b1001_1000_0111_11;
+                #5 switches = 14'b1100_1011_1010_11;
+                #5 switches = 14'b1111_1110_1101_11;
+                #5
+                
+                $finish;
+            end
+endmodule

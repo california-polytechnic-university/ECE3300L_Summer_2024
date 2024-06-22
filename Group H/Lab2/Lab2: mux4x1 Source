@@ -1,0 +1,36 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: California State Polytechnic University Pomona
+// Engineer: Undergraduate Brandon Rickman
+// 
+// Create Date: 06/21/2024 01:07:55 PM
+// Design Name: Lab2
+// Module Name: mux2x1
+// Project Name: 4MUX_RGB_Control
+// Target Devices: 
+// Tool Versions: 
+// Description: Basic construction of 2x1 Multiplexer using gate logic
+// 
+// Dependencies: 
+// 
+// Revision: 1.0
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module mux2x1(
+                input sel,
+                input [1:0] mux2x1_ip,
+                output mux2x1_op
+             );
+             
+             wire [2:0] temp;
+         
+         not(temp[2],sel);  //Set temp[2] as ~sel
+         and(temp[0], mux2x1_ip[0], temp[2]);    //temp[0] is the output of the first AND gate: input[0] AND ~sel
+         and(temp[1], mux2x1_ip[1], sel);    //temp[1] is the output of the second AND gate: input[1] AND sel
+         or(mux2x1_op, temp[0], temp[1]);   //The output of the 2MUX is the result of both AND gates being OR'd together
+         
+endmodule

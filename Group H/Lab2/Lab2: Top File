@@ -1,1 +1,43 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: California State Polytechnic University Pomona
+// Engineer: Undergraduate Brandon Rickman
+// 
+// Create Date: 06/21/2024 01:47:38 PM
+// Design Name: Lab2
+// Module Name: rgb_control
+// Project Name: 4MUX_RGB_Control
+// Target Devices: 
+// Tool Versions: 
+// Description: Combination of three 4x1 Multiplexers for full RGB control 
+// 
+// Dependencies: 
+// 
+// Revision: 1.0
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
 
+
+module rgb_control(
+                    input [13:0] SW,
+                    output LED16_R, LED16_G, LED16_B
+                  );
+    
+        mux4x1  red  (
+                        .sel(SW[1:0]),  //Sel assigned switches 0 and 1 on board 
+                        .mux4x1_ip(SW[5:2]),    //Red multiplexer assigned switches 2 through 5 on board
+                        .mux4x1_op(LED16_R)     //Output controls red color of LED
+                     );
+        mux4x1  green  (
+                        .sel(SW[1:0]),  //Sel assigned switches 0 and 1 on board 
+                        .mux4x1_ip(SW[9:6]),    //Green multiplexer assigned switches 6 through 9 on board
+                        .mux4x1_op(LED16_G)     //Output controls green color of LED
+                     );
+        mux4x1  blue  (
+                        .sel(SW[1:0]),  //Sel assigned switches 0 and 1 on board 
+                        .mux4x1_ip(SW[13:10]),  //Blue multiplexer assigned switches 10 through 13 on board
+                        .mux4x1_op(LED16_B)     //Output controls blue color of LED
+                     );             
+endmodule

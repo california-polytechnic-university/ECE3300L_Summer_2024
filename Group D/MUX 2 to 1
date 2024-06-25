@@ -1,0 +1,22 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: Cal Poly Pomona
+// Engineer: Antonuos Kerollos, Daniele Ricciardelli, William Masri
+// Description: Multiplexer 2x1
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module mux_2x1
+(
+input [1:0] mux2_inp,
+input select2,
+output mux2_out
+);
+wire [2:0] temp;
+
+not (temp[2],select2);
+and (temp[0], mux2_inp[0], select2 );
+and (temp[1], mux2_inp[1], temp[2]);
+or  (mux2_out, temp[0], temp[1]);
+
+endmodule

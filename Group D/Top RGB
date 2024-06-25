@@ -1,0 +1,34 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: Cal Poly Pomona
+// Engineer: Antonuos Kerollos, Daniele Ricciardelli, William Masri
+// Description: Combination of 4x1 multiplexer so we can control the RBG lights of the board
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module colors_rgb
+(
+input [13:0] SW,
+output LED16_R, LED16_G, LED16_B
+);
+
+mux_4x1 red
+        (
+        .select4(SW[1:0]),
+        .mux4_in(SW[5:2]),
+        .mux4_out(LED16_R)
+        );
+mux_4x1 green
+        (
+        .select4(SW[1:0]),
+        .mux4_in(SW[9:6]),
+        .mux4_out(LED16_G)
+        );
+mux_4x1 blue
+        (
+        .select4(SW[1:0]),
+        .mux4_in(SW[13:10]),
+        .mux4_out(LED16_B)        
+        );
+        
+endmodule

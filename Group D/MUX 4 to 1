@@ -1,0 +1,40 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: Cal Poly Pomona
+// Engineer: Antonuos Kerollos, Daniele Ricciardelli, William Masri
+// Description: Multiplexer 4x1
+//////////////////////////////////////////////////////////////////////////////////
+
+
+
+module mux_4x1
+(
+input [1:0] select4,
+input [3:1] mux4_in,
+output mux4_out
+);
+
+wire [1:0] mux4_temp;
+
+mux_2x1 MUX0
+        (
+        .select2(select4[0]),
+        .mux2_inp(mux4_in[1:0]),
+        .mux2_out(mux4_temp[0])
+        );
+
+mux_2x1 MUX1
+        (
+        .select2(select4[0]),
+        .mux2_inp(mux4_in[3:2]),
+        .mux2_out(mux4_temp[1])
+        );
+
+mux_2x1 MUX2
+        (
+        .select2(select4[1]),
+        .mux2_inp(mux4_temp[1:0]),
+        .mux2_out(mux4_out)
+        );
+
+endmodule

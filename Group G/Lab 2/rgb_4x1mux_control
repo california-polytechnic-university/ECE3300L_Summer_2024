@@ -1,0 +1,22 @@
+module rgb_4x1mux_control(
+    input wire [13:0] sw,  // 14 Switches for input
+    output wire red, green, blue  // Outputs for RGB LEDs
+);
+
+    // Intermediate wires for 2x1 mux outputs
+    wire red0, red1, green0, green1, blue0, blue1;
+
+
+    mux2to1 red_stage0(.a(sw[2]), .b(sw[3]), .sel(sw[0]), .y(red0));
+    mux2to1 red_stage1(.a(sw[4]), .b(sw[5]), .sel(sw[0]), .y(red1));
+    mux2to1 green_stage0(.a(sw[6]), .b(sw[7]), .sel(sw[0]), .y(green0));
+    mux2to1 green_stage1(.a(sw[8]), .b(sw[9]), .sel(sw[0]), .y(green1));
+    mux2to1 blue_stage0(.a(sw[10]), .b(sw[11]), .sel(sw[0]), .y(blue0));
+    mux2to1 blue_stage1(.a(sw[12]), .b(sw[13]), .sel(sw[0]), .y(blue1));
+
+
+    mux2to1 red_final(.a(red0), .b(red1), .sel(sw[1]), .y(red));
+    mux2to1 green_final(.a(green0), .b(green1), .sel(sw[1]), .y(green));
+    mux2to1 blue_final(.a(blue0), .b(blue1), .sel(sw[1]), .y(blue));
+
+endmodule

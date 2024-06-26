@@ -1,0 +1,38 @@
+`timescale 1ns / 1ps
+
+module rgb_4x1mux_control_tb();
+    reg [13:0] SW_tb;  // Adjusted for 14 input switches
+    wire RED_tb, GREEN_tb, BLUE_tb;
+
+    rgb_4x1mux_control uut(
+        .sw(SW_tb),
+        .red(RED_tb),
+        .green(GREEN_tb),
+        .blue(BLUE_tb)
+    );
+
+    initial begin
+        // All off
+        SW_tb = 14'b0000_0000_0000_00; #10;
+        
+        
+        SW_tb = 14'b0001_0001_0001_00; #10; // Test with 00
+        SW_tb = 14'b0001_0001_0001_01; #10; // Change selector to 01
+        SW_tb = 14'b0011_0011_0011_01; #10; 
+        SW_tb = 14'b0010_0010_0010_01; #10;
+        
+
+        SW_tb = 14'b0010_0010_0010_10; #10; // Start with 10
+        SW_tb = 14'b0110_0110_0110_10; #10; 
+        SW_tb = 14'b0100_0100_0100_10; #10; 
+        
+        SW_tb = 14'b0100_0100_0100_11; #10; // Start with 11
+        SW_tb = 14'b1100_1100_1100_11; #10; 
+        SW_tb = 14'b1000_1000_1000_11; #10; 
+        
+        // Reset to all off at the end
+        SW_tb = 14'b0000_0000_0000_00; #10; // All off
+
+        $finish;
+    end
+endmodule

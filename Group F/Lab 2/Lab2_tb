@@ -1,0 +1,77 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 06/26/2024 01:17:32 PM
+// Design Name: Joshua Castillo
+// Module Name: Lab2_tb
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+
+module Lab2_tb;
+
+    reg [13:0] SW;
+    wire [2:0] LED;
+
+    top DUT (
+        .top_sw(SW),
+        .top_led(LED)
+    );
+
+    initial begin
+        sw = 14'b0;
+
+        sw = 14'b00000000000000; // All inputs are 0
+        #40;
+        sw = 14'b00000000000001; // Inputs are 0001
+        #40;
+        sw = 14'b00000000000010; // Inputs are 0010
+        #40;
+        sw = 14'b00000000000100; // Inputs are 0100
+        #40;
+        sw = 14'b00000000001000; // Inputs are 1000
+        #40;
+
+        sw = 14'b00000000010000; // Inputs are 0001
+        #40;
+        sw = 14'b00000000100000; // Inputs are 0010
+        #40;
+        sw = 14'b00000001000000; // Inputs are 0100
+        #40;
+        sw = 14'b00000010000000; // Inputs are 1000
+        #40;
+
+        sw = 14'b00000100000000; // Inputs are 0001
+        #40;
+        sw = 14'b00001000000000; // Inputs are 0010
+        #40;
+        sw = 14'b00010000000000; // Inputs are 0100
+        #40;
+        sw = 14'b00100000000000; // Inputs are 1000
+        #40;
+
+        sw = 14'b01000000000000; // Inputs are 0001
+        #40;
+        sw = 14'b10000000000000; // Inputs are 0010
+        #40;
+        sw = 14'b00000000000000; // Inputs are 0100
+        #40;
+        sw = 14'b11100000000000; // Inputs are 1000
+        #40;
+
+        $finish;
+    end
+endmodule

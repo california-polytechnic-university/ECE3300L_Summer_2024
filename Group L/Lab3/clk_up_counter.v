@@ -48,6 +48,7 @@ module clk_up_counter(
             5'b00010 : max_count = 32'd200000000;  // every 3 seconds 7seg updates
             5'b00011 : max_count = 32'd100000000;  // every 2 seconds 7seg updates
             5'b00100 : max_count = 32'd50000000;   // every 1 second 7seg updates
+            
             5'b00101 : max_count = 32'd40000000;
             5'b00110 : max_count = 32'd30000000;
             5'b00111 : max_count = 32'd20000000;
@@ -69,12 +70,14 @@ module clk_up_counter(
             5'b10111 : max_count = 32'd400000;
             5'b11000 : max_count = 32'd300000;
             5'b11001 : max_count = 32'd200000;
-            5'b11010 : max_count = 32'd100000;     // every 2 milliseconds 7seg updates
-            5'b11011 : max_count = 32'd90000;
-            5'b11100 : max_count = 32'd80000;
-            5'b11101 : max_count = 32'd70000;
-            5'b11110 : max_count = 32'd60000;
-            5'b11111 : max_count = 32'd50000;      // every millisecond 7seg updates
+            
+            5'b11010 : max_count = 32'd50000;      // every millisecond 7seg updates
+            
+            5'b11011 : max_count = 32'd50;
+            5'b11100 : max_count = 32'd40;
+            5'b11101 : max_count = 32'd30;
+            5'b11110 : max_count = 32'd20;
+            5'b11111 : max_count = 32'd10;
             default: max_count = 32'd3000000000;   // every minute 7seg updates
         endcase
     end

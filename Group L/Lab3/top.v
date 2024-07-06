@@ -23,12 +23,12 @@
 // Ethan McKendell and Logan Zimmerman
 
 module top(
-    input clk,
-    input rst,
-    input en,
-    input sel,
-    input [4:0] clk_frequency,
-    output [6:0] display_7seg
+    input wire clk,
+    input wire rst,
+    input wire en,
+    input wire sel,
+    input wire [4:0] clk_frequency,
+    output wire [6:0] display_7seg
     );
     
     // value and clk_divider is needed within two instantiations
@@ -43,7 +43,7 @@ module top(
     );
     
     bcd_hex_up_counter counter(
-        .clk(clk_divider),
+        .clk_divider(clk_divider),
         .rst(rst),
         .en(en),
         .sel(sel),

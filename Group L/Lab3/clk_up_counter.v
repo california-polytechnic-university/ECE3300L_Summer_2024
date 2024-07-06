@@ -77,7 +77,7 @@ module clk_up_counter(
             5'b11100 : max_count = 32'd40;
             5'b11101 : max_count = 32'd30;
             5'b11110 : max_count = 32'd20;
-            5'b11111 : max_count = 32'd10;
+            5'b11111 : max_count = 32'd1;          // every 20ns
             default: max_count = 32'd3000000000;   // every minute 7seg updates
         endcase
     end

@@ -28,10 +28,8 @@ module top(
     input en,
     input sel,
     input [4:0] clk_frequency,
-    
     output [6:0] display_7seg
     );
-    
     
     // value and clk_divider is needed within two instantiations
     wire clk_divider;
@@ -56,4 +54,5 @@ module top(
         .value(value),
         .display_7seg(display_7seg)
     ); 
+    
 endmodule

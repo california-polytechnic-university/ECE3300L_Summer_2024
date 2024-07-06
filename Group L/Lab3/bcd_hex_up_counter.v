@@ -23,17 +23,17 @@
 // Ethan McKendell and Logan Zimmerman
 
 module bcd_hex_up_counter(
-    input clk,
-    input rst,
-    input en,
-    input sel,
-    output [3:0] value
+    input wire clk_divider,
+    input wire rst,
+    input wire en,
+    input wire sel,
+    output wire [3:0] value
     );
     
     reg [3:0] tmp_value; // register to determine BCD/HEX value
     
     // execute following on clk or rst rising edge
-    always @(posedge clk or posedge rst)
+    always @(posedge clk_divider or posedge rst)
     begin
     
     // if rst = 1, set tmp = 0

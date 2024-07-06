@@ -23,7 +23,7 @@
 // Ethan McKendell and Logan Zimmerman
 
 module bcd_hex_to_7seg(
-    input [3:0] value,
+    input wire [3:0] value,
     output reg [6:0] display_7seg
     );
     

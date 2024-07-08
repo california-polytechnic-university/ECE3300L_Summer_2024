@@ -1,0 +1,67 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: California State Polytechnic University Pomona
+// Engineer: Undergraduate Brandon Rickman
+// 
+// Create Date: 07/02/2024 04:18:49 PM
+// Design Name: 
+// Module Name: UpCounter_top
+// Project Name: Lab3_Upcounter
+// Target Devices: 
+// Tool Versions: 
+// Description: Counter top file, ties clock divider with upcounter and board controls 
+// 
+// Dependencies: 
+// 
+// Revision: 2.1
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module UpCounter_top(
+    input clk,  // Clock
+    input BTNC, // Reset button
+    input sel,  // BCD/HEX toggle
+    input en,   // Count enable
+    input [15:11] SW, // 5 switches for clock divider control
+    output [6:0] SEG,   // Activating segments a-g on 7seg 
+    output wire [7:0] AN    // Enabling the first digit on 7seg
+);
+  
+//
+    wire CLK_div;   // Clock divider output clock frequency
+    wire [3:0] counter_tmp; // Counter output
+    wire rst;   // Reset
+    
+    assign rst = BTNC;
+
+    // 32-bit clock divider instance
+    clk_div #(.BITS(32)) clk_div_inst (
+        .s(SW[15:11]),
+        .f(CLK_div),
+        .clk(clk),
+        .reset_n(rst)
+    );
+//
+
+    // Up counter instance
+    upcounter upcounter1 (
+        .clk(CLK_div),
+        .rst(BTNC),
+        .en(en),
+        .sel(sel),
+        .op(counter_tmp)
+    );
+
+    // Seven segment decoder instance
+    Seven_seg_decoder SevSegDec (
+        .value(counter_tmp),
+        .seg(SEG)
+    );
+
+    // Enable the first digit
+    assign AN[7:0] = 8'hFE;
+
+endmodule

@@ -1,0 +1,57 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: California State Polytechnic University Pomona
+// Engineer: Undergraduate Brandon Rickman
+// 
+// Create Date: 06/29/2024 07:18:58 PM
+// Design Name: 
+// Module Name: upcounter
+// Project Name: Lab3_Upcounter
+// Target Devices: 
+// Tool Versions: 
+// Description: Basic design of BCD and HEX 4-bit up counter. Select High is BCD, Select Low is Hex
+// 
+// Dependencies: 
+// 
+// Revision: 1.1
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module upcounter(
+                    input clk,  //Clock
+                    input rst,  //Reset
+                    input en,   //Enable
+                    input sel,  //BCD/HEX selector switch
+                    output [3:0] op //Counter output
+                );
+                
+                reg [3:0] tmp;  //Temporary output from counter
+                
+                always@(posedge clk or posedge rst)    //Initialize clock: Changed from (posedge clk) to (posedge clk or posedge rst)
+                    begin
+                        if(rst) //If reset is high
+                            tmp <= 0;   //Unblocked, counter goes to zero
+                        else
+                          begin
+                            if(en)  //If the enable is high
+                                begin
+                                    if(sel) //If selector is also high
+                                        begin
+                                            if(tmp < 9) //If selector is high, count to BCD (up to 9)
+                                                tmp <= tmp+1;
+                                            else
+                                                tmp <= 0;   //Any number outside of BCD range is zero
+                                        end
+                                    else
+                                        begin
+                                            tmp <= tmp+1;   //If selector is low, normal 16-bit counter
+                                        end
+                                end
+                          end
+                    end
+                    
+            assign op = tmp;
+endmodule

@@ -1,0 +1,58 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: California State Polytechnic University Pomona
+// Engineer: Undergraduate Brandon Rickman
+// 
+// Create Date: 07/02/2024 04:11:17 PM
+// Design Name: 
+// Module Name: clk_div
+// Project Name: Lab3_Upcounter
+// Target Devices: 
+// Tool Versions: 
+// Description: Design of 32-bit counter for clock control
+// 
+// Dependencies: 
+// 
+// Revision: 1.1
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module clk_div
+#(parameter BITS = 32) //Number of bits for counter
+    (
+    input [$clog2(BITS)-1:0] s, //Selector bit
+    output reg f,   //Output clock division
+    input clk,  //System clock
+    input reset_n   //Reset
+    );
+    
+   wire [BITS-1:0] Q;   //Value of counter
+   reg [BITS - 1:0] Q_reg, Q_next;  //Current and next counter values 
+   
+   always @(posedge clk, posedge reset_n)
+   begin
+    if(reset_n)
+        Q_reg <= 0; //Reset counter to zero
+    else
+        Q_reg <= Q_next;    //Otherwise update counter with next value 
+   end
+   
+   always@(Q_reg)
+   begin
+    Q_next = Q_reg + 1; //Update to incriment counter
+   end
+   
+   assign Q = Q_reg;    //Current counter value equal to wire Q
+   
+   integer k;   //Variable for loop
+   always@(Q, s)
+   begin
+    f = 1'bx;   //Default value for f, dont care
+    for(k = 0; k < BITS; k = k+1)   //Loop through all bits 
+        if(k==s)    //If loop index matches the selector 
+            f = Q[k];   //Corresponding counter bit is equal to f
+   end
+endmodule

@@ -1,0 +1,52 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: California State Polytechnic University Pomona
+// Engineer: Undergraduate Brandon Rickman
+// 
+// Create Date: 06/29/2024 10:58:03 PM
+// Design Name: 
+// Module Name: 7seg_decoder
+// Project Name: Lab3_Upcounter
+// Target Devices: 
+// Tool Versions: 
+// Description: Decoder for Seven Segment Display 
+// 
+// Dependencies: 
+// 
+// Revision: 2.0
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module Seven_seg_decoder(
+                            input [3:0] value,
+                            output [6:0] seg
+                         );
+                         
+                         reg [6:0] segments [0:15];
+                         
+                         initial
+                            begin
+                                segments[4'd0]  = 7'b1000000;    // Digit displayed 0
+                                segments[4'd1]  = 7'b1111001;    // Digit displayed 1
+                                segments[4'd2]  = 7'b0100100;    // Digit displayed 2
+                                segments[4'd3]  = 7'b0110000;    // Digit displayed 3
+                                segments[4'd4]  = 7'b0011001;    // Digit displayed 4
+                                segments[4'd5]  = 7'b0010010;    // Digit displayed 5
+                                segments[4'd6]  = 7'b0000010;    // Digit displayed 6
+                                segments[4'd7]  = 7'b1111000;    // Digit displayed 7
+                                segments[4'd8]  = 7'b0000000;    // Digit displayed 8
+                                segments[4'd9]  = 7'b0011000;    // Digit displayed 9
+                                segments[4'd10] = 7'b0001000;    // Digit displayed A
+                                segments[4'd11] = 7'b0000011;    // Digit displayed b
+                                segments[4'd12] = 7'b1000110;    // Digit displayed C
+                                segments[4'd13] = 7'b0100001;    // Digit displayed d
+                                segments[4'd14] = 7'b0000110;    // Digit displayed E
+                                segments[4'd15] = 7'b0001110;    // Digit displayed F
+                                                                
+                            end
+                            
+ assign seg = segments[value];
+endmodule

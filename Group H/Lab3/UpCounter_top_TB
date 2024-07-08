@@ -1,0 +1,72 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: California State Polytechnic University Pomona
+// Engineer: Undergraduate Brandon Rickman
+// 
+// Create Date: 07/02/2024 04:20:13 PM
+// Design Name: 
+// Module Name: UpCounter_top_TB
+// Project Name: Lab3_Upcounter
+// Target Devices: 
+// Tool Versions: 
+// Description: Test bench file for upcounter
+// 
+// Dependencies: 
+// 
+// Revision: 3.0
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module UpCounter_top_tb;
+    //Inputs
+    reg CLK;    //Clock signal
+    reg BTNC;   //Reset button
+    reg sel;    //Selector 
+    reg en;     //Enable
+
+    //Outputs
+    wire [6:0] SEG; //Active segments value on display
+    wire [3:0] counter_tmp; //BCD or Hex value 
+
+    
+    //Instantiate BCD counter
+    upcounter uut_BCD (
+        .clk(CLK),
+        .rst(BTNC),
+        .en(en),
+        .sel(sel),
+        .op(counter_tmp)
+    );
+
+    //Instantiate seven segment display decoder 
+    Seven_seg_decoder uut_decoder (
+        .value(counter_tmp),
+        .seg(SEG)
+    );
+
+    //Clock
+    initial
+        begin
+            CLK = 0;    //Clock initially low
+            forever #5 CLK = ~CLK;  // For simulation duration, clock inverts every 5ns
+        end
+    initial
+        begin
+            BTNC = 1;   //Reset button pushed
+            en = 0; //Not enabled
+            sel = 0;    //HEX mode
+                       
+            #10 BTNC = 0;   //Reset not active
+            #10 en = 1; //Enabled
+            #160
+            #10 BTNC = 1;   //Reset active 10ns
+            #10 BTNC = 0;   //Reset not active
+            #10 sel = 1;    //BCD mode
+            #160
+            #10 en = 0; //Not enabled
+            $finish;
+        end
+endmodule 

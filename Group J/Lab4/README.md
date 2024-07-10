@@ -1,3 +1,3 @@
-Video Link Demonstration:
+Demonstration video link:
 
 Testbench Screenshot:

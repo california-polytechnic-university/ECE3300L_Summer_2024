@@ -1,0 +1,37 @@
+module bcdcounter(
+   input clk, 
+    input enable,
+    input reset,
+    input select,
+    output [3:0] out
+    );
+
+    reg [3:0] temp; // temp is 4-bit (0-15)
+
+
+    always @(posedge clk or posedge reset)
+    begin
+    if(reset)
+    temp <= 0;
+    else
+            begin
+            if(enable)
+                begin
+                if(select)
+                    begin
+                    if(temp<9)
+                    temp <= temp + 1;
+                    else
+                    temp <= 0;
+                    end
+                    else
+                    begin
+                    temp <= temp + 1;
+                    end
+    end
+    end
+    end
+
+    assign out = temp; 
+
+endmodule

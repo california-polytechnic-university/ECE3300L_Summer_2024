@@ -62,17 +62,22 @@ module top_tb(
         reset_n = 1'b1;
         #2
         reset_n = 1'b0;
-        sel = 2'b00;
-        csel = 5'b01011;
+        sel = 2'b00; // counting UP in BCD
+        csel = 5'b00011;
         #500000;
         
-        sel = 2'b10;
+        sel = 2'b10; // counting DOWN in BCD
         #250000;
         
-        reset_n = 1'b1;
+        reset_n = 1'b1; // reseting to 0
         #2
         reset_n = 1'b0;
-        sel = 2'b01;
+        sel = 2'b01; // counting UP in HEX
         #500000;
-         
+        
+        sel = 2'b11; // counting DOWN in HEX
+        #250000;
+        
      end
+     
+endmodule

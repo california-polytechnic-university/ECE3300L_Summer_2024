@@ -1,6 +1,7 @@
 Demonstration video link: https://youtu.be/IYvp93pDkEk
 
 Testbench Screenshots:
+
 1
 <img width="960" alt="Screenshot 2024-07-10 at 11 38 24 AM" src="https://github.com/california-polytechnic-university/ECE3300L_Summer_2024/assets/171191779/1e1dfc9f-95a6-4228-86ea-810915cf574d">
 (Counting UP in BCD)

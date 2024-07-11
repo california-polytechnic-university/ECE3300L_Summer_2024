@@ -31,7 +31,7 @@ module top(
             if(countdivider >= (32'd100000000 >> speed))
             begin
                 countdivider <= 32'd0;
-                slowmoveclk <= ~slow_clk;
+                slowmoveclk <= ~slowmoveclk;
             end
             else
             begin
@@ -55,7 +55,7 @@ module top(
     .count(onesplace)
     );
     multi_decade_counter counter1(
-    .clk(slow_clk),             
+    .clk(slowmoveclk),             
     .reset(reset),              
     .type(type),                
     .enable(e0),
@@ -64,7 +64,7 @@ module top(
     .count(tensplace)
     );
     multi_decade_counter counter2(
-    .clk(slow_clk),             
+    .clk(slowmoveclk),             
     .reset(reset),              
     .type(type),                
     .enable(e0 & e1),
@@ -73,7 +73,7 @@ module top(
     .count(hundredsplace)
     );
     multi_decade_counter counter3(
-    .clk(slow_clk),             
+    .clk(slowmoveclk),             
     .reset(reset),              
     .type(type),                
     .enable(e0 & e1 & e2),

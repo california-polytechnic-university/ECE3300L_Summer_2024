@@ -33,7 +33,7 @@ module clk_up_counter(
     
     reg [31:0] clk_count;
     reg [31:0] max_count;
-    reg [17:0] fresh_count;
+    reg [10:0] fresh_count;
     
     
     // 32x5 mux: changes max_count depending on clk_frequency switches
@@ -80,11 +80,11 @@ module clk_up_counter(
             
             5'b11010 : max_count = 32'd49999;      // every millisecond 7seg updates
             
-            5'b11011 : max_count = 32'd19;
-            5'b11100 : max_count = 32'd14;
-            5'b11101 : max_count = 32'd9;
-            5'b11110 : max_count = 32'd4;
-            5'b11111 : max_count = 32'd0;          // every 10ns
+            5'b11011 : max_count = 32'd39999;
+            5'b11100 : max_count = 32'd29999;
+            5'b11101 : max_count = 32'd19999;
+            5'b11110 : max_count = 32'd9999;
+            5'b11111 : max_count = 32'd999;        // every 1000ns
             default: max_count = 32'd3000000000;   // every minute 7seg updates
         endcase
     end
@@ -120,19 +120,19 @@ module clk_up_counter(
     begin
         if(rst) 
             begin
-                fresh_count <= 17'd0;
+                fresh_count <= 10'd0;
                 clk_refresh <= 1'b0;
             end 
             else 
                 begin
-                if(fresh_count >= 49999) // 1ms update
+                if(fresh_count >= 999) // 10 000ns update
                     begin
-                        fresh_count <= 17'd0;  // reset counter to 0 when max_count is reached
+                        fresh_count <= 10'd0;  // reset counter to 0 when max_count is reached
                         clk_refresh <= ~clk_refresh;
                     end 
             else 
                 begin
-                    fresh_count <= fresh_count + 17'd1;
+                    fresh_count <= fresh_count + 10'd1;
                 end
         end
     end

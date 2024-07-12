@@ -34,7 +34,7 @@ module refresh_up_counter(
     reg [1:0] refresh;
     reg [3:0] tmp_bcd_hex_value;
     
-    // execute following block on clk_refresh (1ms) or rst rising edge
+    // execute following block on clk_refresh (10 000ns) or rst rising edge
     always @(posedge clk_refresh or posedge rst)
     begin 
         if(rst)
@@ -47,7 +47,7 @@ module refresh_up_counter(
             end
     end
     
-    // refresh one 7seg display every 1ms
+    // refresh one 7seg display every 10 000ns
     always @(refresh)
     begin
         case(refresh)

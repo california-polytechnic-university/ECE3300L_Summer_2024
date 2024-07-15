@@ -1,0 +1,124 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: California State Polytechnic University
+// Engineer(s): Undergrads Jose Lopez and Brandon Rickman
+// 
+// Create Date: 07/12/2024 11:30:20 PM
+// Design Name: 
+// Module Name: top
+// Project Name: Lab4 BCD/HEX UP/DOWN Counter 
+// Target Devices: 
+// Tool Versions: 
+// Description: Top File for Sub Modules
+// 
+// Dependencies: 
+// 
+// Revision: 2.7
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+module top
+#(
+    parameter BITS = 32
+) (
+    input clk, // System clock
+    input reset_n, // Reset button
+    input enable, // Enable switch
+    input up_down, // Up or down counter toggle switch
+    input bcd_sel, // BCD or HEX counter toggle switch
+    input [4:0] SW, // Clock divider toggle switches
+    output [6:0] sseg, // Seven segment display segments
+    output [7:0] AN // Active displays
+);
+
+    wire [3:0] Q0, Q1, Q2, Q3;
+    // Clock divider for counter
+    wire clk_new;
+    clock_divider #(.BITS(BITS)) clk_div (
+        .s(SW[4:0]),
+        .f(clk_new),
+        .clk(clk),
+        .reset_n(reset_n)
+    );
+
+    // BCD Hex Counters
+    wire en_out1, en_out2, en_out3; // Enabling next display
+
+    bcd_hex_counter C0(
+        .clk(clk_new),
+        .reset_n(reset_n),
+        .enable(enable),
+        .up_down(up_down),
+        .bcd_sel(bcd_sel),
+        .enable_out(en_out1),
+        .Q(Q0)
+    );
+
+    bcd_hex_counter C1(
+        .clk(clk_new),
+        .reset_n(reset_n),
+        .enable(en_out1),
+        .up_down(up_down),
+        .bcd_sel(bcd_sel),
+        .enable_out(en_out2),
+        .Q(Q1)
+    );
+
+    bcd_hex_counter C2(
+        .clk(clk_new),
+        .reset_n(reset_n),
+        .enable(en_out2 & en_out1),
+        .up_down(up_down),
+        .bcd_sel(bcd_sel),
+        .enable_out(en_out3),
+        .Q(Q2)
+    );
+
+    bcd_hex_counter C3(
+        .clk(clk_new),
+        .reset_n(reset_n),
+        .enable(en_out1 & en_out2 & en_out3),
+        .up_down(up_down),
+        .bcd_sel(bcd_sel),
+        .enable_out(),
+        .Q(Q3)
+    );
+
+    // Multiplexing logic
+    reg [1:0] current_display;
+
+    // Digit select logic
+    always @(posedge clk_new or posedge reset_n) begin
+        if (reset_n)
+            current_display <= 2'b00;
+        else
+            current_display <= current_display + 1;
+    end
+
+    // 7-segment display decoder
+    reg [3:0] current_digit;
+    always @(*) begin
+        case (current_display)
+            2'b00: current_digit = Q0;
+            2'b01: current_digit = Q1;
+            2'b10: current_digit = Q2;
+            2'b11: current_digit = Q3;
+            default: current_digit = 4'b0000;
+        endcase
+    end
+
+    // Display the current digit on the 7-segment display
+    hex2sseg display1(
+        .hex(current_digit),
+        .sseg(sseg)
+    );
+
+    // Enable signals for each digit
+    assign AN = (current_display == 2'b00) ? 8'b1111_1110 :
+                (current_display == 2'b01) ? 8'b1111_1101 :
+                (current_display == 2'b10) ? 8'b1111_1011 :
+                (current_display == 2'b11) ? 8'b1111_0111 : 8'b1111_1111;
+
+endmodule

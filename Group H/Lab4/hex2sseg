@@ -1,0 +1,48 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: California State Polytechnic University
+// Engineer(s): Undergrads Jose Lopez and Brandon Rickman
+// 
+// Create Date: 07/12/2024 11:27:00 PM
+// Design Name: 
+// Module Name: hex2sseg
+// Project Name: Lab4 BCD/HEX UP/DOWN Counter 
+// Target Devices: 
+// Tool Versions: 
+// Description: Seven Segment Display Decoder
+// 
+// Dependencies: 
+// 
+// Revision: 1.1
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module hex2sseg(
+                input [3:0] hex,        //Hex value
+                output reg [6:0] sseg   //Activated segments 
+                );
+
+    always@(hex)
+    case(hex)
+        0:  sseg = 7'b1000000;  //Digit '0'
+        1:  sseg = 7'b1111001;  //Digit '1'
+        2:  sseg = 7'b0100100;  //Digit '2'
+        3:  sseg = 7'b0110000;  //Digit '3'
+        4:  sseg = 7'b0011001;  //Digit '4'
+        5:  sseg = 7'b0010010;  //Digit '5'
+        6:  sseg = 7'b0000010;  //Digit '6'
+        7:  sseg = 7'b1111000;  //Digit '7'
+        8:  sseg = 7'b0000000;  //Digit '8'
+        9:  sseg = 7'b0010000;  //Digit '9'
+        10: sseg = 7'b0001000;  //Digit 'A'
+        11: sseg = 7'b0000011;  //Digit 'b'
+        12: sseg = 7'b1000110;  //Digit 'C'
+        13: sseg = 7'b0100001;  //Digit 'd'
+        14: sseg = 7'b0000110;  //Digit 'E'
+        15: sseg = 7'b0001110;  //Digit 'F'
+        default: sseg = 7'b0111111;   //Digit '-'
+   endcase
+endmodule

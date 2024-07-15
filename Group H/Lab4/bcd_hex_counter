@@ -1,0 +1,54 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: California State Polytechnic University
+// Engineer: Undergrads Jose Lopez and Brandon Rickman
+// 
+// Create Date: 07/12/2024 11:29:18 PM
+// Design Name: 
+// Module Name: bcd_hex_counter
+// Project Name: Lab4 BCD/HEX UP/DOWN Counter 
+// Target Devices: 
+// Tool Versions: 
+// Description: Module to handle BCD, HEX, UP, and DOWN configurations
+// 
+// Dependencies: 
+// 
+// Revision: 1.4
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+module bcd_hex_counter(
+    input clk,  // System Clock
+    input reset_n,  // Reset
+    input enable,  // Enable counter
+    input up_down,  // Up/Down toggle switch
+    input bcd_sel,  // BCD/HEX toggle switch
+    output reg enable_out,  // Enable next display
+    output [3:0] Q  // Counter hex value output
+);
+
+    reg [3:0] Q_reg, Q_next;
+
+    always @(posedge clk or posedge reset_n) begin
+        if (reset_n)
+            Q_reg <= 0;  // Counter clears upon reset
+        else if (enable)
+            Q_reg <= Q_next;  // Counting resumes when enabled
+    end
+
+    always @(*) begin
+        if (up_down && bcd_sel)  // Up and BCD selected
+            { enable_out, Q_next } = (Q_reg == 9) ? { 1'b1, 4'd0 } : { 1'b0, Q_reg + 1 };
+        else if (up_down && !bcd_sel)  // Up and HEX selected
+            { enable_out, Q_next } = (Q_reg == 15) ? { 1'b1, 4'd0 } : { 1'b0, Q_reg + 1 };
+        else if (!up_down && bcd_sel)  // Down and BCD selected
+            { enable_out, Q_next } = (Q_reg == 0) ? { 1'b1, 4'd9 } : { 1'b0, Q_reg - 1 };
+        else  // Down and HEX selected
+            { enable_out, Q_next } = (Q_reg == 0) ? { 1'b1, 4'd15 } : { 1'b0, Q_reg - 1 };
+    end
+
+    assign Q = Q_reg;
+
+endmodule

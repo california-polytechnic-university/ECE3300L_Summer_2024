@@ -1,0 +1,59 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: California State Polytechnic University
+// Engineer(s): Undergrads Jose Lopez and Brandon Rickman
+// 
+// Create Date: 07/12/2024 11:27:55 PM
+// Design Name: 
+// Module Name: clock_divider
+// Project Name: Lab4 BCD/HEX UP/DOWN Counter 
+// Target Devices: 
+// Tool Versions: 
+// Description: Flip Flop Clock Divider to Control Display Speed
+// 
+// Dependencies: 
+// 
+// Revision: 1.9
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+module clock_divider
+#(parameter BITS = 32) // Number of bits for counter
+(
+    input [$clog2(BITS)-1:0] s, // Selector switch bits
+    output reg f,   // Output clock division
+    input clk,  // System clock
+    input reset_n,   // Reset
+    output [BITS-1:0] Q_debug  // Debug output for Q_reg
+);
+
+    reg [BITS-1:0] Q_reg = 0, Q_next;    // Current and next counter values
+
+    // Clocking block
+    always @(posedge clk or posedge reset_n)
+    begin
+        if (reset_n)
+            Q_reg <= 0;  // Reset counter to zero
+        else
+            Q_reg <= Q_next; // Otherwise update counter to next value
+    end
+
+    // Next state logic
+    always @(Q_reg)
+    begin
+        Q_next = Q_reg + 1;  // Update, incrementing counter
+    end
+
+    // Frequency division logic
+    always @(posedge clk or posedge reset_n)
+    begin
+        if (reset_n)
+            f <= 1'b0;  // Reset f to 0
+        else
+            f <= Q_reg[s];  // Update f based on the selected bit of Q
+    end
+
+    assign Q_debug = Q_reg;  // Assign Q_reg to Q_debug for debugging
+
+endmodule

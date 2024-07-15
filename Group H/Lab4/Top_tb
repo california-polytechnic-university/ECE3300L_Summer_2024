@@ -1,0 +1,111 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: California State Polytechnic University
+// Engineer: Undergrad. Brandon Rickman
+// 
+// Create Date: 07/14/2024 02:06:21 PM
+// Design Name: 
+// Module Name: Top_tb
+// Project Name: Lab4 BCD/HEX UP/DOWN Counter 
+// Target Devices: 
+// Tool Versions: 
+// Description: Test bench for testing each case of clock divider, and conditions for BCD/HEX UP/DOWN displaying
+// 
+// Dependencies: 
+// 
+// Revision: 2.7
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+module top_tb;
+
+    reg clk;  // System clock
+    reg reset_n;  // Reset register
+    reg enable;  // Enable register
+    reg [4:0] s;  // Clock divider switches register
+    reg up_down;  // Up/Down register
+    reg bcd_sel;  // BCD/HEX register
+    wire [6:0] sseg;  // Segments on seven segment display
+    wire [7:0] AN;  // Active displays
+    wire [3:0] Q0, Q1, Q2, Q3;  // Monitor the counter values
+    wire en_out1, en_out2, en_out3;  // Enable signals for debugging
+
+    // Instantiate the Unit Under Test (UUT)
+    top #(32) uut (
+        .clk(clk),
+        .reset_n(reset_n),
+        .enable(enable),
+        .up_down(up_down),
+        .bcd_sel(bcd_sel),
+        .SW(s),
+        .sseg(sseg),
+        .AN(AN)
+    );
+
+    // Clock generation
+    initial begin
+        clk = 0;
+        forever #5 clk = ~clk;  // 100 MHz clock
+    end
+
+    // Test sequence
+    initial begin
+        // Initialize Inputs
+        reset_n = 0;  // Reset low
+        enable = 1;  // Enable counter
+        s = 5'b00000;  // Set clock divider to once per cycle
+        up_down = 1;  // UP Count 
+        bcd_sel = 1;  // Count in BCD
+
+        // Deassert reset after a short delay
+        #10 reset_n = 1;  // Reset high
+        #10 reset_n = 0;  // Reset low
+
+        // Clock divider switch settings
+        #50 s = 5'b00000; // System clock speed for simulation
+        
+        //-----Uncomment to test clock divider switch settings-----
+//        #500 s = 5'd1;  
+//        #500 s = 5'd2;
+//        #500 s = 5'd3;
+//        #500 s = 5'd4;
+//        #500 s = 5'd5;
+//        #500 s = 5'd6;
+
+        //-----Uncomment to test up counting in BCD-----
+        up_down = 1; bcd_sel = 1;
+        #100000;    //Run simulation for 100,000ns
+//          #500; //Uncomment when testing clock divider switch settings 
+
+//        //-----Uncomment to test down counting in BCD
+//        up_down = 0; bcd_sel = 1;
+//        #100000;    //Run simulation for 100,000ns
+
+
+//        //-----Uncomment to test up counting in HEX
+//        up_down = 1; bcd_sel = 0;
+//        #100000;    //Run simulation for 100,000ns
+
+
+//        //-----Uncomment to test down counting in HEX
+//        up_down = 0; bcd_sel = 0;
+//        #100000;    //Run simulation for 100,000ns
+
+        // End simulation
+        $stop;
+    end
+
+    // Monitor the counter values
+    assign Q0 = uut.C0.Q;
+    assign Q1 = uut.C1.Q;
+    assign Q2 = uut.C2.Q;
+    assign Q3 = uut.C3.Q;
+
+    // Monitor enable signals
+    assign en_out1 = uut.C0.enable_out;
+    assign en_out2 = uut.C1.enable_out;
+    assign en_out3 = uut.C2.enable_out;
+
+endmodule

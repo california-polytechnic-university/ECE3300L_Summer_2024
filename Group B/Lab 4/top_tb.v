@@ -1,4 +1,4 @@
-module Lab4_tb();
+module top_tb();
     reg clk;
     reg rst;
     reg upDown;

@@ -1,0 +1,58 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// 
+// 
+// Create Date: 07/15/2024 11:10:55 PM
+// Design Name: 
+// Module Name: clk_divider
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision: 1.0
+// Revision 0.00 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+module clk_divider
+#(parameter WIDTH = 32) // Number of bits for counter
+(
+    input [$clog2(WIDTH)-1:0] div_select, // Selector switch bits
+    output reg div_clk,   // Output clock division
+    input sys_clk,  // System clock
+    input sys_reset_n,   // Reset
+    output [WIDTH-1:0] counter_debug  // Debug output for counter
+);
+
+    reg [WIDTH-1:0] counter_reg = 0, counter_next; 
+
+    // Clocking block
+    always @(posedge sys_clk or posedge sys_reset_n)
+    begin
+        if (sys_reset_n)
+            counter_reg <= 0;  
+        else
+            counter_reg <= counter_next; 
+    end
+
+    // Next state logic
+    always @(counter_reg)
+    begin
+        counter_next = counter_reg + 1; 
+    end
+
+    // Frequency division logic
+    always @(posedge sys_clk or posedge sys_reset_n)
+    begin
+        if (sys_reset_n)
+            div_clk <= 1'b0;  
+        else
+            div_clk <= counter_reg[div_select]; 
+    end
+
+    assign counter_debug = counter_reg; 
+
+endmodule

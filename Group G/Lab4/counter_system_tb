@@ -1,0 +1,111 @@
+`timescale 1ns / 1ps
+
+module test_counter_system;
+
+    // Declare inputs as regs
+    reg clk_main;          // Main clock signal
+    reg rst_active_high;   // Active-high reset signal
+    reg enable_counter;    // Counter enable signal
+    reg direction_ctrl;    // Direction control signal (Up/Down)
+    reg mode_ctrl;         // Mode control signal (BCD/HEX)
+    reg [4:0] clk_div_ctrl; // Clock divider control signal
+
+    // Declare outputs as wires
+    wire [6:0] seg_out;    // Output segments for the 7-segment display
+    wire [7:0] anode_ctrl; // Anode control for the 7-segment display
+    wire [3:0] dig_0, dig_1, dig_2, dig_3; // Output counter digits
+    wire clk_div_out;      // Divided clock signal
+    wire [31:0] debug_cnt; // Debug value of the counter
+    wire en_chain_0, en_chain_1, en_chain_2, en_chain_3; // Enable chain signals
+
+    // Instantiate the DUT (Device Under Test)
+    counter_system #(32) dut (
+        .sys_clk(clk_main),
+        .sys_reset_n(~rst_active_high), // Active-high to active-low conversion
+        .sys_enable(enable_counter),
+        .direction(direction_ctrl),
+        .mode_select(mode_ctrl),
+        .div_select(clk_div_ctrl),
+        .segment(seg_out),
+        .anode(anode_ctrl)
+    );
+
+    // Clock generation process
+    initial begin
+        clk_main = 0;
+        forever #5 clk_main = ~clk_main;  // 100 MHz clock generation
+    end
+
+    // Stimulus process
+    initial begin
+        // Initialize inputs
+        rst_active_high = 0;
+        enable_counter = 0;
+        clk_div_ctrl = 5'b00000;
+        direction_ctrl = 1;
+        mode_ctrl = 1;
+
+        // Apply reset initially
+        #10 rst_active_high = 1;  // Deassert reset
+        #10 rst_active_high = 0;  // Assert reset
+
+        // Enable counter and set initial clock divider
+        #20 enable_counter = 1;  
+        #30 clk_div_ctrl = 5'b00001;  
+        #100;  
+
+        // Test up counting in BCD mode
+        direction_ctrl = 1; mode_ctrl = 1;
+        #2000;  
+
+        // Test down counting in BCD mode
+        direction_ctrl = 0; mode_ctrl = 1;
+        #2000;  
+
+        // Test up counting in HEX mode
+        direction_ctrl = 1; mode_ctrl = 0;
+        #2000;  
+
+        // Test down counting in HEX mode
+        direction_ctrl = 0; mode_ctrl = 0;
+        #2000;  
+
+        // Test different clock divider settings
+        for (integer i = 0; i < 5; i = i + 1) begin
+            #50 clk_div_ctrl = i;  
+            #50 enable_counter = 0;  
+            #200;  
+            #50 enable_counter = 1;  
+            #1000;  
+        end
+
+        // Deactivate counter
+        #50 enable_counter = 0;  
+        #1000;  
+
+        // End simulation
+        $finish;
+    end
+
+    // Assignments to monitor internal signals
+    assign dig_0 = dut.U0.out;
+    assign dig_1 = dut.U1.out;
+    assign dig_2 = dut.U2.out;
+    assign dig_3 = dut.U3.out;
+
+    assign clk_div_out = dut.clk_div_inst.div_clk;
+    assign debug_cnt = dut.clk_div_inst.counter_debug;
+    assign en_chain_0 = dut.U0.next_enable;
+    assign en_chain_1 = dut.U1.next_enable;
+    assign en_chain_2 = dut.U2.next_enable;
+    assign en_chain_3 = dut.U3.next_enable;
+
+    // Monitor internal signals during simulation
+    initial begin
+        $monitor("Time=%t, clk_div_ctrl=%b, debug_cnt=%d, clk_div_out=%b, dig_0=%b, dig_1=%b, dig_2=%b, dig_3=%b, en_chain_0=%b, en_chain_1=%b, en_chain_2=%b, en_chain_3=%b", 
+                  $time, clk_div_ctrl, debug_cnt, clk_div_out, dig_0, dig_1, dig_2, dig_3, en_chain_0, en_chain_1, en_chain_2, en_chain_3);
+    end
+
+endmodule
+
+

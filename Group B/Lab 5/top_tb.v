@@ -1,4 +1,4 @@
-module Lab5_tb();
+module top_tb();
   
     reg clk;
     reg rst;
@@ -12,7 +12,7 @@ module Lab5_tb();
     wire [7:0] an;
     wire odp;
 
-    Lab5 NAG (
+    top NAG (
         .clk(clk), 
         .rst(rst), 
         .upDown(upDown), 

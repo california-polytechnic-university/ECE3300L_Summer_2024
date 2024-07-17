@@ -1,0 +1,54 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// 
+// 
+// 
+// Create Date: 07/15/2024 11:10:05 PM
+// Design Name: 
+// Module Name: counter_unit
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision: 1.0
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+module counter_unit(
+    input clk,  
+    input reset_n, 
+    input enable,  
+    input direction,  
+    input mode_select,  
+    output reg next_enable,  
+    output [3:0] out  
+);
+
+    reg [3:0] reg_out, next_out;
+
+    always @(posedge clk or posedge reset_n) begin
+        if (reset_n)
+            reg_out <= 0;  
+        else if (enable)
+            reg_out <= next_out;  
+    end
+
+    always @(*) begin
+        if (direction && mode_select)  // Up and BCD selected
+            { next_enable, next_out } = (reg_out == 9) ? { 1'b1, 4'd0 } : { 1'b0, reg_out + 1 };
+        else if (direction && !mode_select)  // Up and HEX selected
+            { next_enable, next_out } = (reg_out == 15) ? { 1'b1, 4'd0 } : { 1'b0, reg_out + 1 };
+        else if (!direction && mode_select)  // Down and BCD selected
+            { next_enable, next_out } = (reg_out == 0) ? { 1'b1, 4'd9 } : { 1'b0, reg_out - 1 };
+        else  // Down and HEX selected
+            { next_enable, next_out } = (reg_out == 0) ? { 1'b1, 4'd15 } : { 1'b0, reg_out - 1 };
+    end
+
+    assign out = reg_out;
+
+endmodule

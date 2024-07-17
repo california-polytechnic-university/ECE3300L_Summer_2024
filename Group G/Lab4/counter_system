@@ -1,0 +1,124 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// 
+// 
+// Create Date: 07/15/2024 11:10:20 PM
+// Design Name: 
+// Module Name: counter_system
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision: 1.0
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+module counter_system
+#(
+    parameter WIDTH = 32
+) (
+    input sys_clk, 
+    input sys_reset_n, 
+    input sys_enable, 
+    input direction, 
+    input mode_select, 
+    input [4:0] div_select, 
+    output [6:0] segment, 
+    output [7:0] anode 
+);
+
+    wire [3:0] digit0, digit1, digit2, digit3;
+    wire divided_clk;
+    
+    // Clock Divider Module Instance
+    clk_divider #(.WIDTH(WIDTH)) clk_div_inst (
+        .div_select(div_select[4:0]),
+        .div_clk(divided_clk),
+        .sys_clk(sys_clk),
+        .sys_reset_n(sys_reset_n)
+    );
+
+    // Counter Modules Instances
+    wire en1, en2, en3;
+
+    counter_unit U0(
+        .clk(divided_clk),
+        .reset_n(sys_reset_n),
+        .enable(sys_enable),
+        .direction(direction),
+        .mode_select(mode_select),
+        .next_enable(en1),
+        .out(digit0)
+    );
+
+    counter_unit U1(
+        .clk(divided_clk),
+        .reset_n(sys_reset_n),
+        .enable(en1),
+        .direction(direction),
+        .mode_select(mode_select),
+        .next_enable(en2),
+        .out(digit1)
+    );
+
+    counter_unit U2(
+        .clk(divided_clk),
+        .reset_n(sys_reset_n),
+        .enable(en2 & en1),
+        .direction(direction),
+        .mode_select(mode_select),
+        .next_enable(en3),
+        .out(digit2)
+    );
+
+    counter_unit U3(
+        .clk(divided_clk),
+        .reset_n(sys_reset_n),
+        .enable(en1 & en2 & en3),
+        .direction(direction),
+        .mode_select(mode_select),
+        .next_enable(),
+        .out(digit3)
+    );
+
+    // Multiplexing Logic for Display
+    reg [1:0] active_display;
+
+    always @(posedge divided_clk or posedge sys_reset_n) begin
+        if (sys_reset_n)
+            active_display <= 2'b00;
+        else
+            active_display <= active_display + 1;
+    end
+
+    // Selecting the Active Digit for Display
+    reg [3:0] active_digit;
+    always @(*) begin
+        case (active_display)
+            2'b00: active_digit = digit0;
+            2'b01: active_digit = digit1;
+            2'b10: active_digit = digit2;
+            2'b11: active_digit = digit3;
+            default: active_digit = 4'b0000;
+        endcase
+    end
+
+    // 7-Segment Display Decoder Instance
+    seg_decoder seg_dec_inst(
+        .hex_digit(active_digit),
+        .segment(segment)
+    );
+
+    // Anode Control Logic
+    assign anode = (active_display == 2'b00) ? 8'b1111_1110 :
+                   (active_display == 2'b01) ? 8'b1111_1101 :
+                   (active_display == 2'b10) ? 8'b1111_1011 :
+                   (active_display == 2'b11) ? 8'b1111_0111 : 8'b1111_1111;
+
+endmodule

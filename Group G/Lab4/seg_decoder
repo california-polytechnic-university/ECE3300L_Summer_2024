@@ -1,0 +1,46 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// 
+// 
+// Create Date: 07/15/2024 11:10:00 PM
+// Design Name: 
+// Module Name: seg_decoder
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision: 1.0
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+module seg_decoder(
+    input [3:0] hex_digit, // Hex value
+    output reg [6:0] segment // Activated segments 
+);
+
+    always @(hex_digit)
+    case(hex_digit)
+        4'd0:  segment = 7'b1000000;  // Digit '0'
+        4'd1:  segment = 7'b1111001;  // Digit '1'
+        4'd2:  segment = 7'b0100100;  // Digit '2'
+        4'd3:  segment = 7'b0110000;  // Digit '3'
+        4'd4:  segment = 7'b0011001;  // Digit '4'
+        4'd5:  segment = 7'b0010010;  // Digit '5'
+        4'd6:  segment = 7'b0000010;  // Digit '6'
+        4'd7:  segment = 7'b1111000;  // Digit '7'
+        4'd8:  segment = 7'b0000000;  // Digit '8'
+        4'd9:  segment = 7'b0010000;  // Digit '9'
+        4'd10: segment = 7'b0001000;  // Digit 'A'
+        4'd11: segment = 7'b0000011;  // Digit 'b'
+        4'd12: segment = 7'b1000110;  // Digit 'C'
+        4'd13: segment = 7'b0100001;  // Digit 'd'
+        4'd14: segment = 7'b0000110;  // Digit 'E'
+        4'd15: segment = 7'b0001110;  // Digit 'F'
+        default: segment = 7'b0111111;   // Invalid input
+   endcase
+endmodule

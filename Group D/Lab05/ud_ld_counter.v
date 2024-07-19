@@ -55,14 +55,14 @@ module ud_ld_counter(
             2'b11: done_reg = (count == 4'h9)? 1 : 0;
             default: done_reg = 0;
         endcase
-        if(mode)
-            corrected_count = count;
-        else
-            corrected_count = (count >= 9) ? count + 6 : count;
+//        if(mode)
+//            corrected_count = count;
+//        else
+//            corrected_count = (count >= 9) ? count + 6 : count;
     end
    
     // Output logic
     assign done = done_reg;
-    assign count_out = corrected_count;
+    assign count_out = count;
    
 endmodule

@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module top_tb(
+module top_tb;
     reg clk_tb;
     reg rst_tb;
     reg en_tb;
@@ -71,11 +71,10 @@ module top_tb(
         #2000000;
         
         load_tb = 1;
-        load_count_tb = 4'b1000; // Load 8 to every 7seg display
+        load_count_tb = 4'b0001; // Load 1 to every 7seg display
         
         #2000000;
         
         $finish;
     end
-    );
 endmodule

@@ -36,16 +36,15 @@ module bcd_hex_up_down_counter(
     );
     
     // execute following block on clk_divider or rst rising edge
-    always @(posedge clk_divider or posedge rst or posedge load)
+    always @(posedge clk_divider or posedge rst)
     begin
         if (rst) 
             begin
                 count <= 0; 
             end
-        else if(load)
+        else if (load)
             begin
-                count <= load_count; // loads same counts for all counters
-                                     // i.e. count0 = count1 = count2 = count3        
+                count <= load_count;
             end
         else if(en)
             begin                   

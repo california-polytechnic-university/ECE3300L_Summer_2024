@@ -1,0 +1,137 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: California State Polytechnic University Pomona
+// Engineer: Undergrad Brandon Rickman
+// 
+// Create Date: 07/19/2024 02:55:13 PM
+// Design Name: 
+// Module Name: top_tb
+// Project Name: Lab5_Adding_Load_Count
+// Target Devices: 
+// Tool Versions: 
+// Description: Test bench file for testing load feature, clock divider, and UP/DOWN BCD/HEX features
+// 
+// Dependencies: 
+// 
+// Revision: 1.0
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module top_tb;
+
+    reg clk;  // System clock
+    reg reset_n;  // Reset register
+    reg enable;  // Enable register
+    reg [4:0] s;  // Clock divider switches register
+    reg up_down;  // Up/Down register
+    reg bcd_sel;  // BCD/HEX register
+    reg [3:0] load_val;  // Load value register
+    reg load_en;  // Load enable register
+    wire [6:0] sseg;  // Segments on seven segment display
+    wire [7:0] AN;  // Active displays
+    wire [3:0] Q0, Q1, Q2, Q3;  // Monitor the counter values
+    wire en_out1, en_out2, en_out3;  // Enable signals for debugging
+
+    // Instantiate the Unit Under Test (UUT)
+    top #(32) uut (
+        .clk(clk),
+        .reset_n(reset_n),
+        .enable(enable),
+        .up_down(up_down),
+        .bcd_sel(bcd_sel),
+        .SW(s),
+        .load_val(load_val),
+        .load_en(load_en),
+        .sseg(sseg),
+        .AN(AN)
+    );
+
+    // Clock generation
+    initial begin
+        clk = 0;
+        forever #5 clk = ~clk;  // 100 MHz clock
+    end
+
+    // Test sequence
+    initial begin
+        // Initialize Inputs
+        reset_n = 0;  // Reset low
+        enable = 0;  // Disable counter initially
+        s = 5'b00000;  // Set clock divider to once per cycle
+        up_down = 1;  // UP Count 
+        bcd_sel = 1;  // Count in BCD
+        load_val = 4'b0000;  // Load value to zero initially
+        load_en = 0;  // Load enable initially low
+
+        // Deassert reset after a short delay
+        #10 reset_n = 1;  // Set reset
+        #10 reset_n = 0;  // Disable reset
+
+        // Enable the counter
+        #10 enable = 1; 
+
+        // Run the counter for a short while
+        #100;
+
+        // Test loading a value
+        load_val = 4'b1001;  // Load value to 9
+        #10 load_en = 1;  // Set load enable
+        #10 load_en = 0;  // Disable load enable
+
+        // Run the counter for a short while
+        #1000;
+
+        // Test loading another value
+        load_val = 4'b0101;  // Load value to 5
+        #10 load_en = 1;  // Set load enable
+        #10 load_en = 0;  // Disable load enable
+
+        // Run the counter for a short while
+        #100;
+
+        // Test up counting in BCD
+        up_down = 1; bcd_sel = 1;
+        
+        //-----Uncomment to test clock divider switch settings-----
+        //-----Increase simulation runtime to capture entire simulation-----
+//        #100 s = 5'b00001;  
+//        #500 s = 5'b00010;
+//        #500 s = 5'b00100;
+//        #1000 s = 5'b01000;
+//        #20000 s = 5'b10000;
+//        #4000000 s = 5'b10111;
+//        #800000000
+        
+        #100000;  // Run simulation for 100,000ns
+
+        // Test down counting in BCD
+        up_down = 0; bcd_sel = 1;
+        #100000;  // Run simulation for 100,000ns
+
+        // Test up counting in HEX
+        up_down = 1; bcd_sel = 0;
+        #100000;  // Run simulation for 100,000ns
+
+        // Test down counting in HEX
+        up_down = 0; bcd_sel = 0;
+        #100000;  // Run simulation for 100,000ns
+
+        // End simulation
+        $stop;
+    end
+
+    // Monitor the counter values
+    assign Q0 = uut.C0.Q;
+    assign Q1 = uut.C1.Q;
+    assign Q2 = uut.C2.Q;
+    assign Q3 = uut.C3.Q;
+
+    // Monitor enable signals
+    assign en_out1 = uut.C0.enable_out;
+    assign en_out2 = uut.C1.enable_out;
+    assign en_out3 = uut.C2.enable_out;
+
+endmodule

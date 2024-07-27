@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="alu_circuit_tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="alu_circuit_tb" />
+            <top_module name="glbl" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="180.001 ns"></ZoomEndTime>
+      <Cursor1Time time="180.000 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="142"></NameColumnWidth>
+      <ValueColumnWidth column_width="58"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="12" />
+   <wvobject fp_name="/alu_circuit_tb/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/alu_circuit_tb/reset" type="logic">
+      <obj_property name="ElementShortName">reset</obj_property>
+      <obj_property name="ObjectShortName">reset</obj_property>
+   </wvobject>
+   <wvobject fp_name="/alu_circuit_tb/op" type="array">
+      <obj_property name="ElementShortName">op[1:0]</obj_property>
+      <obj_property name="ObjectShortName">op[1:0]</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/alu_circuit_tb/A" type="array">
+      <obj_property name="ElementShortName">A[3:0]</obj_property>
+      <obj_property name="ObjectShortName">A[3:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/alu_circuit_tb/signA" type="logic">
+      <obj_property name="ElementShortName">signA</obj_property>
+      <obj_property name="ObjectShortName">signA</obj_property>
+   </wvobject>
+   <wvobject fp_name="/alu_circuit_tb/signB" type="logic">
+      <obj_property name="ElementShortName">signB</obj_property>
+      <obj_property name="ObjectShortName">signB</obj_property>
+   </wvobject>
+   <wvobject fp_name="/alu_circuit_tb/B" type="array">
+      <obj_property name="ElementShortName">B[3:0]</obj_property>
+      <obj_property name="ObjectShortName">B[3:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/alu_circuit_tb/uut/final_C" type="array">
+      <obj_property name="ElementShortName">final_C[11:0]</obj_property>
+      <obj_property name="ObjectShortName">final_C[11:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/alu_circuit_tb/uut/signC" type="logic">
+      <obj_property name="ElementShortName">signC</obj_property>
+      <obj_property name="ObjectShortName">signC</obj_property>
+   </wvobject>
+   <wvobject fp_name="/alu_circuit_tb/uut/ones" type="array">
+      <obj_property name="ElementShortName">ones[3:0]</obj_property>
+      <obj_property name="ObjectShortName">ones[3:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/alu_circuit_tb/uut/tens" type="array">
+      <obj_property name="ElementShortName">tens[3:0]</obj_property>
+      <obj_property name="ObjectShortName">tens[3:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/alu_circuit_tb/uut/sseg" type="array">
+      <obj_property name="ElementShortName">sseg[6:0]</obj_property>
+      <obj_property name="ObjectShortName">sseg[6:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+</wave_config>

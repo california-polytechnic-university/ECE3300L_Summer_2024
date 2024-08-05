@@ -1,0 +1,93 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: California State Polytechnic Universide Pomona
+// Engineer: Undergrad Brandon Rickman
+// 
+// Create Date: 08/04/2024 04:42:27 PM
+// Design Name: 
+// Module Name: Test_Bench
+// Project Name: Lab6_Alien_Calculator
+// Target Devices: 
+// Tool Versions: 
+// Description: Test bench for Lab6 alien calculator
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module Test_Bench(
+
+    );
+    
+    reg CLOCK;
+    reg RESET;
+    reg [4:0] A, B;
+    reg [1:0] OPERATION;
+    wire [7:0] RESULT;
+    wire SIGN;
+    
+    calc_bcd calculator(
+        .in1(A),
+        .in2(B),
+        .op(OPERATION),
+        .reset(RESET),
+        .result(RESULT),
+        .sign(SIGN)
+    );
+    
+    sseg_driver driver(
+    .clk(CLOCK),  //System clock
+    .reset_n(RESET),  //Reset
+    .a(A),  //Signed number for digit a
+    .b(B),  //Signed number for digit b
+    .op(OPERATION) //Operation: addition, subtraction, multiplication
+    );
+    
+    initial
+    begin
+        CLOCK = 0;
+        RESET = 0;
+        forever #5 CLOCK = ~CLOCK;
+    end
+    
+    initial
+    begin
+        #10
+        OPERATION = 2'b01;  //Addition
+        #10
+        A = 5'b00010; 
+        B = 5'b00011; 
+        #50 // 2 + 3 = 5
+        A = 5'b10110;
+        B = 5'b00010; 
+        #50 //(-6) + 2 = -4
+        
+        RESET = 1; #10
+        RESET = 0; 
+        
+        OPERATION = 2'b10;   //Subtraction
+        A = 5'b01000; 
+        B = 5'b00100;
+        #50 // 8 - 4 = 4
+        A = 5'b10111; 
+        B = 5'b00001;
+        #50 // (-7) - 1 = -8
+        
+        RESET = 1; #10
+        RESET = 0; 
+        
+        OPERATION = 2'b11;   //Multiplication
+        A = 5'b00011; 
+        B = 5'b00100;
+        #50 // 3 * 4 = 12
+        A = 5'b00010; 
+        B = 5'b10011;
+        #50 // 2 * (-3) = -6
+        $finish;
+    end
+endmodule

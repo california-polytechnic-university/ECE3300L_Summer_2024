@@ -1,0 +1,74 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: California State Polytechnic Universide Pomona
+// Engineer: Undergrads Jose Lopez and Brandon Rickman
+// 
+// Create Date: 08/04/2024 11:49:12 AM
+// Design Name: 
+// Module Name: calc_bcd
+// Project Name: Lab6_Alien_Calculator
+// Target Devices: 
+// Tool Versions: 
+// Description: BCD Calculator module to handle addition, subtraction, and multiplication of signed 4-bit numbers 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments: Module created by Jose and adjustments made by Brandon for board optimization and code comments
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module calc_bcd(
+    input reset,
+    input [4:0] in1, in2,   //Input values from SW[3:0] and SW [8:5]
+    input [1:0] op, //Operation
+    output reg [7:0] result,    //Sum, difference, or product of in1 & in2
+    output reg sign //Sign of result
+    );
+
+    reg signed [4:0] a; //Signed value for digit a
+    reg signed [4:0] b; //Signed value for digit b
+    reg signed [7:0] signed_result; //Signed result of a+b, a-b, or a*b
+
+    wire [4:0] bcd_a;   //BCD value for a
+    wire [4:0] bcd_b;   //BCD value for b
+
+    assign bcd_a = ( in1[3:0] > 4'd9) ? in1[3:0] + 4'd6 : in1;  //If greater than 9, add 6, otherwise bcd_a is equal to in1
+    assign bcd_b = ( in2[3:0] > 4'd9) ? in2[3:0] + 4'd6 : in2;  //If greater than 9, add 6, otherwise bcd_b is equal to in2
+
+    always @(*)
+    begin
+        if(reset)
+        begin
+            result = 8'b00000000;   //If reset, clear result
+            sign = 1'b0;    //If reset, clear the sign
+        end
+        else
+        begin
+          //If the signed bit is negative, the bcd number is negative, otherwise bcd is positive
+            a = in1[4] ? -{1'b0, bcd_a[3:0]} : {1'b0, bcd_a[3:0]};
+            b = in2[4] ? -{1'b0, bcd_b[3:0]} : {1'b0, bcd_b[3:0]};
+
+            case(op)
+                2'b01: signed_result = a + b;   //Addition
+                2'b10: signed_result = a - b;   //Subtraction
+                2'b11: signed_result = a * b;   //Multiplication
+                default: signed_result = 8'b00000000;   //Idle
+            endcase
+            if(signed_result < 0)   //If negative
+            begin
+                result = -signed_result;    //Result is negative
+                sign = 1'b1;    //Sign is high for negative
+            end
+            else
+            begin
+                result = signed_result; //Result is positive
+                sign = 1'b0;    //Sign is low for positive
+            end
+        end
+    end
+
+
+endmodule

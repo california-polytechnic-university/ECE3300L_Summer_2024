@@ -1,0 +1,144 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: California State Polytechnic Universide Pomona
+// Engineer: Undergrads Jose Lopez and Brandon Rickman
+// 
+// Create Date: 08/04/2024 11:51:06 AM
+// Design Name: 
+// Module Name: sseg_driver
+// Project Name: Lab6_Alien_Calculator
+// Target Devices: 
+// Tool Versions: 
+// Description: Top module for instantiating calculator, seven segment displays, and generating a clock divider for displays
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments: Module created by Jose and adjustments made by Brandon for board optimization and code comments
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module sseg_driver(
+    input clk,  //System clock
+    input reset_n,  //Reset
+    input [4:0] a,  //Signed number for digit a
+    input [4:0] b,  //Signed number for digit b
+    input [1:0] op, //Operation: addition, subtraction, multiplication
+    output [6:0] sseg,  //Output to seven segment displays
+    output [7:0] AN     //Activating displays
+    );
+
+    wire [7:0] result;  //Operation result
+    wire sign;  //Sign of result
+    
+calc_bcd calculator (   //Instantiate calculator
+        .in1(a),
+        .in2(b),
+        .op(op),
+        .reset(reset_n),
+        .result(result),
+        .sign(sign)
+);
+
+    // Multiplexer for clock divider 
+    reg [15:0] clk_divider; 
+    reg [2:0] anode_select; 
+        
+    always @(posedge clk or posedge reset_n) 
+    begin
+        if (reset_n) 
+        begin
+            clk_divider <= 16'd0;   //If reset, clear clock divider
+            anode_select <= 3'd0;   //If reset, clear anode selector
+        end 
+        else 
+        begin
+            clk_divider <= clk_divider + 1; //Increase clock divider
+            if (clk_divider == 16'd10000)   //Approximately 1kHz refresh rate for seven segment displays
+            begin 
+                clk_divider <= 16'd0;   //Reset clock divider
+                anode_select <= anode_select + 1;   //Increase anode select to update display
+            end
+        end
+    end
+
+    wire [3:0] ones = result % 10;  //Ones place for result
+    wire [3:0] tens = result / 10;  //Tens place for result
+
+    wire [6:0] sseg_a;  //Display a
+    wire [6:0] sseg_b;  //Display b
+    wire [6:0] sseg_ones;   //Result ones display
+    wire [6:0] sseg_tens;   //Result tens display
+    wire [6:0] sseg_op;     //Operation display
+
+    // Display current digit on 7-segment display
+    bcd2sseg sseg_a_inst( //Instantiate display a
+        .bcd(a[3:0]),
+        .sseg(sseg_a)
+    );
+
+    bcd2sseg sseg_b_inst( //Instantiate display b
+        .bcd(b[3:0]),
+        .sseg(sseg_b)
+    );
+
+    bcd2sseg sseg_ones_inst( //Instantiate ones display
+        .bcd(ones),
+        .sseg(sseg_ones)
+    );
+
+    bcd2sseg sseg_tens_inst( //Instantiate tens display 
+        .bcd(tens),
+        .sseg(sseg_tens)
+    );
+
+    bcd2sseg sseg_operation_inst( //Instantiate operation display
+        .bcd((op == 2'b00) ? 4'd0 :
+             (op == 2'b01) ? 4'd2 :
+             (op == 2'b10) ? 4'd4 :
+             (op == 2'b11) ? 4'd7 : 4'd0),
+         .sseg(sseg_op)
+    );
+// Multiplexed display logic
+    reg [6:0] sseg_reg [7:0];
+
+    always @(*) 
+    begin
+        if (reset_n)    //If reset, clear all displays
+        begin
+            sseg_reg[0] = 7'b0000000;
+            sseg_reg[1] = 7'b0000000;
+            sseg_reg[2] = 7'b0000000;
+            sseg_reg[3] = 7'b0000000;
+            sseg_reg[4] = 7'b0000000;
+            sseg_reg[5] = 7'b0000000;
+            sseg_reg[6] = 7'b0000000;
+            sseg_reg[7] = 7'b0000000;
+        end
+        else
+        begin
+            case (anode_select)     //Select display for updating
+                3'b000: sseg_reg[0] = sseg_a; //AN[0] value of a
+                3'b001: sseg_reg[1] = (a[4]) ? 7'b0100101 : 7'b0101110; //AN[1] sign of a 
+                3'b010: sseg_reg[2] = sseg_b; //AN[2] value of b
+                3'b011: sseg_reg[3] = (b[4]) ? 7'b0100101 : 7'b0101110; //AN[3] sign of b
+                3'b100: sseg_reg[4] = sseg_ones; //AN[4] ones result
+                3'b101: sseg_reg[5] = sseg_tens; //AN[5] tens result
+                3'b110: sseg_reg[6] = (result == 8'b00000000) ? 7'b1111111 : 
+                                      (sign) ? 7'b0100101 : 7'b0101110; //AN[6] Sign of result, blank of result is zero
+                3'b111: sseg_reg[7] = (op == 2'b00) ? 7'b1000000 :  //AN[7] (00) idle '0'
+                                   (op == 2'b01) ? 7'b0100100 :     //AN[7] (01) addition '2'
+                                   (op == 2'b10) ? 7'b0011001 :     //AN[7] (10) subtraction '4'
+                                   (op == 2'b11) ? 7'b1111000 :     //AN[7] (11) multiplication '7'
+                                    7'b1111111;     //AN[7] default as blank
+            endcase
+        end
+    end
+
+    assign AN = ~(8'b00000001 << anode_select); //Display activation
+    assign sseg = sseg_reg[anode_select];   //Current display set by anode select
+    
+
+endmodule

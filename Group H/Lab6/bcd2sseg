@@ -1,0 +1,42 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: California State Polytechnic Universide Pomona
+// Engineer: Undergrads Jose Lopez and Brandon Rickman
+// 
+// Create Date: 08/04/2024 12:15:52 PM
+// Design Name: 
+// Module Name: bcd2sseg
+// Project Name: Lab6_Alien_Calculator
+// Target Devices: 
+// Tool Versions: 
+// Description: BCD to seven segment display decoder
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module bcd2sseg(
+    input [3:0] bcd,
+    output reg [6:0] sseg
+    );
+    
+    always @(bcd)
+        case(bcd)
+        0:  sseg = 7'b1000000;  //Digit '0'
+        1:  sseg = 7'b1111001;  //Digit '1'
+        2:  sseg = 7'b0100100;  //Digit '2'
+        3:  sseg = 7'b0110000;  //Digit '3'
+        4:  sseg = 7'b0011001;  //Digit '4'
+        5:  sseg = 7'b0010010;  //Digit '5'
+        6:  sseg = 7'b0000010;  //Digit '6'
+        7:  sseg = 7'b1111000;  //Digit '7'
+        8:  sseg = 7'b0000000;  //Digit '8'
+        9:  sseg = 7'b0010000;  //Digit '9'
+        default: sseg = 7'b1111111;    //Display off
+        endcase
+endmodule

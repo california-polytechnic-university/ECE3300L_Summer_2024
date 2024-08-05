@@ -19,6 +19,8 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
+// ECE 3300 Lab6: Alien Calculator
+// Ethan McKendell and Logan Zimmerman
 
 module top_tb;
     reg clk_tb;
@@ -64,43 +66,43 @@ module top_tb;
 //        operand_a_tb = 5'b00011; // 3
 //        operand_b_tb = 5'b00101; // 5
 //        operator_tb = 2'b01;     // 3 + 5 = _00 (idle)
-//        #2000000;
+//        #20000;
 
 //        // addition
 //        operand_a_tb = 5'b10011; // -3
 //        operand_b_tb = 5'b00101; // 5
 //        operator_tb = 2'b01;     // -3 + 5 = +02
-//        #200000;
+//        #20000;
 
 //        // subtraction (positive result)
 //        operand_a_tb = 5'b01100; // 12
 //        operand_b_tb = 5'b00010; // 2
 //        operator_tb = 2'b10;     // 12 - 2 = +10
-//        #200000;
+//        #20000;
         
 //        // subtraction (negative result)
 //        operand_a_tb = 5'b10010; // -2
 //        operand_b_tb = 5'b01100; // 12
 //        operator_tb = 2'b10;     // -2 - 10 = -12
-//        #200000;
+//        #20000;
         
 //        // subtraction (zero result)
 //        operand_a_tb = 5'b00100; // 2
 //        operand_b_tb = 5'b00100; // 2
 //        operator_tb = 2'b10;     // 2 - 2 = _00 (no sign)
-//        #200000;
+//        #20000;
 
 //        // multiplication
 //        operand_a_tb = 5'b00101; // 5
 //        operand_b_tb = 5'b00110; // 6
 //        operator_tb = 2'b11;     // 5 * 6 = +30
-//        #200000;
+//        #20000;
         
 //        // multiplication (overflow)
 //        operand_a_tb = 5'b01010; // 10
 //        operand_b_tb = 5'b01010; // 10
 //        operator_tb = 2'b11;     // 10 * 10 = +00 (+00 --> +x00)
-//        #200000;
+//        #20000;
         
         // multiplication (overflow and double negative operands)
         operand_a_tb = 5'b11111; // -15

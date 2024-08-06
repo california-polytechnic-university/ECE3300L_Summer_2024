@@ -1,0 +1,64 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: California State Polytechnic University Pomona
+// Engineer: Undergraduate Brandon Rickman
+// 
+// Create Date: 08/05/2024 01:08:28 PM
+// Design Name: 
+// Module Name: PWM_tb
+// Project Name: Lab7_PWM_RGB
+// Target Devices: 
+// Tool Versions: 
+// Description: Test bench for adjusting duty cycle and testing loaded LED colors
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module PWM_tb();
+
+    reg clk, rst, load_r, load_g, load_b;   //Test bench inputs and clock
+    reg [12:0] Duty;    //Duty cycle inputs
+    wire red, green, blue;  //Test bench outputs for red, green, blue led control
+    
+Top_PWM Pulse_Width_Modulation (    //Instantiate Top Module
+    .clk(clk),
+    .rst(rst),
+    .load_r(load_r),
+    .load_g(load_g),
+    .load_b(load_b),
+    .Duty(Duty),
+    .LED16_R(red),
+    .LED16_G(green),
+    .LED16_B(blue)
+    );
+    
+    initial
+        begin
+            clk = 1'b0; //Clock initially off
+            forever #5 clk = ~clk;  //Generate clock cycle 10ns
+        end
+    initial 
+        begin
+            rst = 1'b1; #10 //Assert reset
+            rst = 1'b0;
+            
+            Duty = 13'b0000000000000;   //No duty cycle
+            load_r = 1'b0;  //No loaded PWM for red
+            load_g = 1'b0;  //No loaded PWM for green
+            load_b = 1'b0;  //No loaded PWM for blue
+            #10
+            load_r = 1'b1; #1500    //Load PWM for red
+            load_g = 1'b1; #1500    //Load PWM for red
+            load_b = 1'b1; #1500    //Load PWM for red
+            Duty = 13'b0000000111111; #4000000  //Adjust duty cycle
+            Duty = 13'b0111111111111; #4000000  //Adjust duty cycle
+            Duty = 13'b1100000000000; #4000000  //Adjust duty cycle
+            $finish;
+        end
+endmodule

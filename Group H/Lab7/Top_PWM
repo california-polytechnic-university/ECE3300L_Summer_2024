@@ -1,0 +1,72 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: California State Polytechnic University Pomona
+// Engineer: Undergraduate Brandon Rickman
+// 
+// Create Date: 08/05/2024 11:56:26 AM
+// Design Name: 
+// Module Name: Top_PWM
+// Project Name: Lab7_PWM_RGB
+// Target Devices: 
+// Tool Versions: 
+// Description: Top file for IP clk divider and instantiating duty load for red, green, and blue
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module Top_PWM #(parameter SIZE = 13) ( 
+    input clk,  //Clock
+    input rst,  //Reset
+    input load_r,   //Load red duty cycle
+    input load_g,   //Load green duty cycle
+    input load_b,   //Load blue duty cycle
+    input [SIZE-1:0] Duty,  //13 switches for Duty cycle adjustment 
+    output LED16_R, //Red output for LED
+    output LED16_G, //Green output for LED
+    output LED16_B  //Blue outpue for LED
+    );
+    
+    wire clk_slow;  //Slow clock
+    wire lock;  //Lock phase loop
+    wire clk_locked;    //PLL locked
+    
+ 
+ clk_wiz_0 clk_gen_slow (   //Instantiate IP clock divider
+    .clk_in1(clk),
+    .reset(rst),
+    .locked(lock),
+    .clk_out1(clk_slow)
+ );
+ 
+ assign clk_locked = clk_slow & lock;   //Locks PLL for clock divider
+ 
+    Main_PWM #(.R_SIZE(SIZE)) PWM_r (   //Instantiate Red PWM
+        .clk(clk_locked),
+        .rst(rst),
+        .load(load_r),
+        .Duty(Duty),
+        .PWM(LED16_R)
+    );
+    
+    Main_PWM #(.R_SIZE(SIZE)) PWM_g (   //Instantiate Green PWM
+        .clk(clk_locked),
+        .rst(rst),
+        .load(load_g),
+        .Duty(Duty),
+        .PWM(LED16_G)
+    );
+    
+    Main_PWM #(.R_SIZE(SIZE)) PWM_b (   //Instantiate Blue PWM
+        .clk(clk_locked),
+        .rst(rst),
+        .load(load_b),
+        .Duty(Duty),
+        .PWM(LED16_B)
+    );
+endmodule

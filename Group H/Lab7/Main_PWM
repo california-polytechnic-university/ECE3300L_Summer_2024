@@ -1,0 +1,66 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: California State Polytechnic University Pomona
+// Engineer: Undergraduate Brandon Rickman
+// 
+// Create Date: 08/05/2024 11:38:17 AM
+// Design Name: 
+// Module Name: Main_PWM
+// Project Name: Lab7_PWM_RGB
+// Target Devices: 
+// Tool Versions: 
+// Description: Module to control pulse width modulation adjustments 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module Main_PWM #(parameter R_SIZE = 8) (   //Resolution bit size
+    input clk,  //System clock
+    input rst,  //Reset
+    input load, //Load value
+    input [R_SIZE-1:0] Duty,    //256 point resolution 
+    output reg PWM  //Pulse width modulated output
+    );
+    
+    reg [R_SIZE-1:0] r_count;   //Resolution counter
+    reg [R_SIZE-1:0] duty_load; //Load duty cycle counter
+    
+    always @(posedge clk or posedge rst)
+        begin: R_COUNTER
+            if(rst)
+                r_count <= 0;   //If reset, clear counter
+            else
+                r_count <= r_count + 1; //Otherwise, update counter
+        end
+        
+    always@(posedge clk or posedge rst)
+        begin: COMPARATOR
+            if(rst)
+                PWM <= 1'b0;    //If reset, clear PWM output
+            else
+                if (r_count < duty_load)
+                    PWM <= 1'b1;    //If resolution count is less than the duty cycle, PWM is active
+                else
+                    PWM <= 1'b0;    //Else, PWM inactive
+        end
+        
+    always@(posedge clk or posedge rst)
+        begin
+            if(rst)
+                duty_load <= 0; //If reset, Duty cycle is zero
+            else
+                begin
+                    if(load)
+                        duty_load <= Duty;  //Load duty cycle input
+                    else
+                        duty_load <= duty_load + 1; //Otherwise update duty cycle
+                end
+        end
+        
+endmodule

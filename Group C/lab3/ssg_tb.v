@@ -50,7 +50,7 @@ module ssg_tb(
         initial
         begin
             sysrst_tb = 1;
-            en_tb = 0;
+            en_tb = 1;
             sel_tb = 0;               
        
         #20
@@ -65,7 +65,7 @@ module ssg_tb(
         
         #20 
             sysrst_tb = 0;
-            en_tb = 0;
+            en_tb = 1;
         
         #20
         

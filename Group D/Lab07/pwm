@@ -1,0 +1,40 @@
+`timescale 1ns / 1ps
+module PWM_CORE #(parameter R_SIZE = 8) (
+    input clk,
+    input rst,
+    input load,
+    input [R_SIZE-1:0] x,
+    output reg PWM
+    );
+    reg [R_SIZE-1:0] r;
+    reg [R_SIZE-1:0] dl;
+    always @(posedge clk or posedge rst)
+    begin: R_COUNTER
+        if(rst)
+            r <= 0;
+        else
+            r <= r + 1;
+    end
+    always @(posedge clk or posedge rst)
+    begin: COMPARATOR
+        if(rst)
+            PWM <= 1'b0;
+        else
+            if ( r < dl)
+                PWM <= 1'b1;
+            else
+                PWM <= 1'b0;
+    end
+    always @(posedge clk or posedge rst)
+    begin
+        if(rst)
+            dl <= 0;
+        else
+        begin
+            if (load)
+                dl <= x;
+            else
+                dl <= dl + 1;
+        end
+    end
+endmodule

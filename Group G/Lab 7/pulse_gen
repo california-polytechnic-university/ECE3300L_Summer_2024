@@ -1,0 +1,30 @@
+`timescale 1ns / 1ps
+
+module pulse_gen
+    #(parameter WIDTH = 8) (
+    input clk,
+    input rst,
+    input [WIDTH-1:0] threshold, // duty cycle threshold
+    output reg pulse_out // PWM output
+    );
+
+    reg [WIDTH-1:0] counter_reg, counter_next; // counter register and next value
+    
+    always @(posedge clk or posedge rst)
+    begin
+        if (rst)
+            counter_reg <= 0; // clear the counter on reset
+        else
+            counter_reg <= counter_next; // update the counter
+    end
+
+    always @(*)
+    begin
+        counter_next = counter_reg + 1; // increment the counter
+    end
+
+    always @(posedge clk)
+    begin
+        pulse_out <= (counter_reg < threshold); // generate pulse based on threshold
+    end
+endmodule

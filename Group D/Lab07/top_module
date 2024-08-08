@@ -1,0 +1,55 @@
+`timescale 1ns / 1ps
+
+module top_module (
+    input wire clk,         // System clock
+    input wire reset,       // Reset signal
+    input loadred,loadgreen,loadblue,
+    input wire [12:0] duty, // Red color intensity (0-255)
+
+    output wire pwm_r,      // PWM output for Red
+    output wire pwm_g,      // PWM output for Green
+    output wire pwm_b       // PWM output for Blue
+);
+    
+// Clock and PWM wires
+wire slow_clk;
+wire lock;
+wire locked_clk;
+
+// Instantiate clock wizard
+clk_wiz_0 clk_gen_slow (
+    .clk_out1(slow_clk),
+    .reset(reset),
+    .locked(lock),
+    .clk_in1(clk)
+);
+
+assign locked_clk = slow_clk & lock;
+
+// Instantiate PWM modules for Red, Green, and Blue
+pwm_mod #(13) red_pwm (
+    .clk(locked_clk),
+    .rst(reset),
+    .load(loadred),
+    .duty(duty),
+    .PWM(pwm_r)
+);
+
+pwm_mod #(13) green_pwm (
+    .clk(locked_clk),
+    .rst(reset),
+    .load(loadgreen),
+    .duty(duty),
+    .PWM(pwm_g)
+);
+
+pwm_mod #(13) blue_pwm (
+    .clk(locked_clk),
+    .rst(reset),
+    .load(loadblue),
+    .duty(duty),
+    .PWM(pwm_b)
+);
+
+endmodule
+

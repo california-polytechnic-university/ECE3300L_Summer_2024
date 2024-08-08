@@ -1,0 +1,67 @@
+`timescale 1ns / 1ps
+
+module top_module_tb;
+
+    // Testbench signals
+    reg clk;
+    reg reset;
+    reg [7:0] duty_cycle_r;
+    reg [7:0] duty_cycle_g;
+    reg [7:0] duty_cycle_b;
+    wire pwm_r;
+    wire pwm_g;
+    wire pwm_b;
+
+    // Instantiate the top_module
+    top_module uut (
+        .clk(clk),
+        .reset(reset),
+        .duty(duty),
+//        .duty(duty),
+//        .duty(duty),
+        .pwm_r(pwm_r),
+        .pwm_g(pwm_g),
+        .pwm_b(pwm_b)
+    );
+
+    // Clock generation
+    initial begin
+        clk = 0;
+        forever #5 clk = ~clk; // 100 MHz clock
+    end
+
+    // Stimulus process
+    initial begin
+        // Initialize inputs
+        reset = 1;
+        duty_cycle_r = 8'd0;
+        duty_cycle_g = 8'd0;
+        duty_cycle_b = 8'd0;
+
+        // Apply reset
+        #10 reset = 0;
+        #10 reset = 1;
+        #10 reset = 0;
+
+        // Apply test values
+        #10 duty_cycle_r = 8'd128;  // 50% duty cycle for Red
+        #10 duty_cycle_g = 8'd64;   // 25% duty cycle for Green
+        #10 duty_cycle_b = 8'd192;  // 75% duty cycle for Blue
+
+        // Change duty cycles over time
+        #100 duty_cycle_r = 8'd255; // 100% duty cycle for Red
+        #100 duty_cycle_g = 8'd0;   // 0% duty cycle for Green
+        #100 duty_cycle_b = 8'd128; // 50% duty cycle for Blue
+
+        // End simulation
+        #500 $finish;
+    end
+
+    // VCD dump
+    initial begin
+        $dumpfile("top_module_tb.vcd");
+        $dumpvars(0, top_module_tb);
+    end
+
+endmodule
+

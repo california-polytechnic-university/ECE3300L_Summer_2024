@@ -10,7 +10,7 @@ module top(
     );
     wire [7:0] result;
     wire sign;
-    bcd_calculator calc(
+    bcd calc(
         .reset(reset),
         .x(x),
         .y(y),
@@ -18,7 +18,7 @@ module top(
         .result(result),
         .sign(sign)
     ); 
-    sseg_driver sd(
+    sseg sd(
         .clk(clk),
         .reset(reset),
         .x(x),

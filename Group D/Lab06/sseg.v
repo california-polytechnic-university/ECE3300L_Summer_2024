@@ -1,5 +1,5 @@
 `timescale 1ns / 1ps
-module sseg_driver(
+module sseg(
     input clk,
     input reset,
     input [4:0] x,

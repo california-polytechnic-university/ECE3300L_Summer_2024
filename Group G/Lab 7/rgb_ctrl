@@ -1,0 +1,63 @@
+`timescale 1ns / 1ps
+
+module rgb_ctrl
+    #(parameter WIDTH = 13) (
+    input clk,
+    input rst, // reset button
+    input change, // button to finalize intensity
+    input [WIDTH-1:0] intensity, // intensity control via switches
+    input [2:0] selector, // selector for RGB color
+    output red_pwm, green_pwm, blue_pwm // PWM outputs for RGB LEDs
+    );
+
+    reg [WIDTH-1:0] red_duty, green_duty, blue_duty;
+    reg [WIDTH-1:0] current_red_duty, current_green_duty, current_blue_duty;
+
+    always @(posedge clk or posedge rst) begin
+        if (rst) begin
+            red_duty <= 0; // reset RGB thresholds
+            green_duty <= 0;
+            blue_duty <= 0;
+            current_red_duty <= 0;
+            current_green_duty <= 0;
+            current_blue_duty <= 0;
+        end else begin
+            // Update current duty cycles based on selector
+            case (selector)
+                3'b001: current_red_duty <= intensity;
+                3'b010: current_green_duty <= intensity;
+                3'b100: current_blue_duty <= intensity;
+                3'b111: begin // Special case for white (all LEDs on)
+                    current_red_duty <= intensity;
+                    current_green_duty <= intensity;
+                    current_blue_duty <= intensity;
+                end
+                default: begin
+                    current_red_duty <= red_duty;
+                    current_green_duty <= green_duty;
+                    current_blue_duty <= blue_duty;
+                end
+            endcase
+
+            // Finalize the duty cycle when change button is pressed
+            if (change) begin
+                red_duty <= current_red_duty;
+                green_duty <= current_green_duty;
+                blue_duty <= current_blue_duty;
+            end
+        end
+    end
+
+    // Instantiate the PWM generators for each color
+    led_driver #(.WIDTH(WIDTH)) driver_inst (
+        .clk(clk),
+        .rst(rst),
+        .red_thresh(current_red_duty),
+        .green_thresh(current_green_duty),
+        .blue_thresh(current_blue_duty),
+        .red_pwm(red_pwm),
+        .green_pwm(green_pwm),
+        .blue_pwm(blue_pwm)
+    );
+
+endmodule

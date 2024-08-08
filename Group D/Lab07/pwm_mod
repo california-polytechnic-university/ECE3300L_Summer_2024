@@ -2,7 +2,7 @@
 
 module pwm_mod #(parameter size = 8) (
     input wire clk,
-    input wire rst,
+    input wire reset,
     input wire load,
     input wire [size-1:0] duty,
     output reg PWM
@@ -10,17 +10,17 @@ module pwm_mod #(parameter size = 8) (
     reg [size-1:0] count;
     reg [size-1:0] duty_load;
 
-    always @(posedge clk or posedge rst)
+    always @(posedge clk or posedge reset)
      begin: counter
-        if (rst)
+        if (reset)
             count <= 0;
         else
             count <= count + 1;
     end
 
-    always @(posedge clk or posedge rst)
+    always @(posedge clk or posedge reset)
      begin: compare
-        if (rst)
+        if (reset)
             PWM <= 1'b0;
         else if (count < duty_load)
             PWM <= 1'b1;
@@ -28,8 +28,8 @@ module pwm_mod #(parameter size = 8) (
             PWM <= 1'b0;
     end
 
-    always @(posedge clk or posedge rst) begin
-        if (rst)
+    always @(posedge clk or posedge reset) begin
+        if (reset)
             duty_load <= 0;
         else if (load)
             duty_load <= duty;

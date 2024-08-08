@@ -1,0 +1,32 @@
+`timescale 1ns / 1ps
+
+module led_driver
+    #(parameter WIDTH = 8) (
+    input clk,
+    input rst,
+    input [WIDTH-1:0] red_thresh, green_thresh, blue_thresh, // duty cycle thresholds for each LED
+    output red_pwm, green_pwm, blue_pwm // PWM outputs for LEDs
+    );
+
+    pulse_gen #(.WIDTH(WIDTH)) red_pulse (
+        .clk(clk),
+        .rst(rst),
+        .threshold(red_thresh),
+        .pulse_out(red_pwm)
+    );
+
+    pulse_gen #(.WIDTH(WIDTH)) green_pulse (
+        .clk(clk),
+        .rst(rst),
+        .threshold(green_thresh),
+        .pulse_out(green_pwm)
+    );
+
+    pulse_gen #(.WIDTH(WIDTH)) blue_pulse (
+        .clk(clk),
+        .rst(rst),
+        .threshold(blue_thresh),
+        .pulse_out(blue_pwm)
+    );
+    
+endmodule

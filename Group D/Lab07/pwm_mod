@@ -22,7 +22,8 @@ module pwm_mod #(parameter size = 8) (
      begin: compare
         if (reset)
             PWM <= 1'b0;
-        else if (count < duty_load)
+        else
+         if (count < duty_load)
             PWM <= 1'b1;
         else
             PWM <= 1'b0;
@@ -31,7 +32,12 @@ module pwm_mod #(parameter size = 8) (
     always @(posedge clk or posedge reset) begin
         if (reset)
             duty_load <= 0;
-        else if (load)
+        else
+        begin
+         if (load)
             duty_load <= duty;
+             else
+                duty_load <= duty_load + 1;
+    end
     end
 endmodule
